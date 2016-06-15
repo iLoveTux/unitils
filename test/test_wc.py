@@ -6,6 +6,13 @@ contents = """This is a test
 this is only a test
 """
 
+def prep_fp(fp):
+    fp.write(contents.encode("utf-8"))
+    fp.flush()
+    fp.seek(0)
+    return fp
+
+
 class TestWC(unittest.TestCase):
     """General tests for wc
     """
@@ -14,9 +21,7 @@ class TestWC(unittest.TestCase):
         files
         """
         with NamedTemporaryFile() as fp:
-            fp.write(contents.encode("utf-8"))
-            fp.flush()
-            fp.seek(0)
+            prep_fp(fp)
             expected = [(2, 9, 35, fp.name)]
             # Must accept either a filename or a file-like object
             results = list(unitils.wc((fp,)))
@@ -28,9 +33,7 @@ class TestWC(unittest.TestCase):
         """wc(files, lines=True) should behave like `wc -l`
         """
         with NamedTemporaryFile() as fp:
-            fp.write(contents.encode("utf-8"))
-            fp.flush()
-            fp.seek(0)
+            prep_fp(fp)
             expected = [(2, fp.name)]
             results = list(unitils.wc((fp.name,), lines=True))
             self.assertEqual(expected, results)
@@ -39,9 +42,7 @@ class TestWC(unittest.TestCase):
         """wc(files, byte_count=True) should behave like `wc -c`
         """
         with NamedTemporaryFile() as fp:
-            fp.write(contents.encode("utf-8"))
-            fp.flush()
-            fp.seek(0)
+            prep_fp(fp)
             expected = [(35, fp.name)]
             results = list(unitils.wc((fp.name,), byte_count=True))
             self.assertEqual(expected, results)
@@ -50,9 +51,7 @@ class TestWC(unittest.TestCase):
         """wc(files, words=True) should behave like `wc -w`
         """
         with NamedTemporaryFile() as fp:
-            fp.write(contents.encode("utf-8"))
-            fp.flush()
-            fp.seek(0)
+            prep_fp(fp)
             expected = [(9, fp.name)]
             results = list(unitils.wc((fp.name,), words=True))
             self.assertEqual(expected, results)
@@ -61,9 +60,7 @@ class TestWC(unittest.TestCase):
         """wc(files, chars=True) should behave like `wc -m`
         """
         with NamedTemporaryFile() as fp:
-            fp.write(contents.encode("utf-8"))
-            fp.flush()
-            fp.seek(0)
+            prep_fp(fp)
             expected = [(35, fp.name)]
             results = list(unitils.wc((fp.name,), chars=True))
             self.assertEqual(expected, results)
@@ -73,9 +70,7 @@ class TestWC(unittest.TestCase):
         byte_count=True) should behave like `wc -cmlw`
         """
         with NamedTemporaryFile() as fp:
-            fp.write(contents.encode("utf-8"))
-            fp.flush()
-            fp.seek(0)
+            prep_fp(fp)
             expected = [(2, 9, 35, 35, fp.name)]
             results = list(unitils.wc(
                 (fp.name,),
@@ -87,13 +82,11 @@ class TestWC(unittest.TestCase):
             ))
             self.assertEqual(expected, results)
 
-    def test_wc_will_yield_only_mac_line_length(self):
+    def test_wc_will_yield_only_max_line_length(self):
         """wc(files, max_line_length=True) should behave like `wc -L`
         """
         with NamedTemporaryFile() as fp:
-            fp.write(contents.encode("utf-8"))
-            fp.flush()
-            fp.seek(0)
+            prep_fp(fp)
             expected = [(19, fp.name)]
             results = list(unitils.wc((fp.name,), max_line_length=True))
             self.assertEqual(expected, results)
@@ -104,9 +97,7 @@ class TestWC(unittest.TestCase):
         """
         with NamedTemporaryFile() as fp_1, NamedTemporaryFile() as fp_2:
             for fp in (fp_1, fp_2):
-                fp.write(contents.encode("utf-8"))
-                fp.flush()
-                fp.seek(0)
+                prep_fp(fp)
             expected = [
                 (2, 9, 35, fp_1.name),
                 (2, 9, 35, fp_2.name),
@@ -115,14 +106,12 @@ class TestWC(unittest.TestCase):
             results = list(unitils.wc((fp_1.name, fp_2.name)))
             self.assertEqual(expected, results)
 
-    def test_wc_adds_totals_if_more_than_one_file(self):
+    def test_wc_adds_totals_if_more_than_one_file_and_works_with_all_options(self):
         """All options should work with multiple files
         """
         with NamedTemporaryFile() as fp_1, NamedTemporaryFile() as fp_2:
             for fp in (fp_1, fp_2):
-                fp.write(contents.encode("utf-8"))
-                fp.flush()
-                fp.seek(0)
+                prep_fp(fp)
             expected = [
                 (2, 9, 35, 35, 19, fp_1.name),
                 (2, 9, 35, 35, 19, fp_2.name),

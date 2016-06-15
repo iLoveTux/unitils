@@ -3,11 +3,11 @@ import re
 import atexit
 
 def wc(files,
-       lines=None,
-       byte_count=None,
-       chars=None,
-       words=None,
-       max_line_length=None):
+       lines=False,
+       byte_count=False,
+       chars=False,
+       words=False,
+       max_line_length=False):
     """Yields newline, word and byte counts for each file and a total
     line if more than one file is specified
     """
