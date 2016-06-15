@@ -20,6 +20,7 @@ def wc(files,
         "name": "total"
     }
     word = re.compile(r"(.*?)\s+")
+
     fps = []
     for f in files:
         if isinstance(f, str):
@@ -54,33 +55,33 @@ def wc(files,
             totals["longest_line"] = longest_line
 
         if not any((lines, byte_count, chars, words, max_line_length)):
-            yield [ret["lines"], ret["words"], ret["bytes"], ret["name"]]
+            yield (ret["lines"], ret["words"], ret["bytes"], ret["name"])
         else:
             _ret = [ret["name"]]
             if max_line_length:
-                _ret = _ret.insert(0, longest_line)
+                _ret = (longest_line, *_ret)
             if byte_count:
-                _ret = _ret.insert(0, ret["bytes"])
+                _ret = (ret["bytes"], *_ret)
             if chars:
-                _ret = _ret.insert(0, ret["chars"])
+                _ret = (ret["chars"], *_ret)
             if words:
-                _ret = _ret.insert(0, ret["words"])
+                _ret = (ret["words"], *_ret)
             if lines:
-                _ret = _ret.insert(0, ret["lines"])
+                _ret = (ret["lines"], *_ret)
             yield _ret
     if len(files) > 1:
         if not any((lines, byte_count, chars, words, max_line_length)):
-            yield [totals["lines"], totals["words"], totals["bytes"], totals["name"]]
+            yield (totals["lines"], totals["words"], totals["bytes"], totals["name"])
         else:
             _ret = [totals["name"]]
             if max_line_length:
-                _ret = _ret.insert(0, longest_line)
+                _ret = (longest_line, *_ret)
             if byte_count:
-                _ret = _ret.insert(0, totals["bytes"])
+                _ret = (totals["bytes"], *_ret)
             if chars:
-                _ret = _ret.insert(0, totals["chars"])
+                _ret = (totals["chars"], *_ret)
             if words:
-                _ret = _ret.insert(0, totals["words"])
+                _ret = (totals["words"], *_ret)
             if lines:
-                _ret = _ret.insert(0, totals["lines"])
+                _ret = (totals["lines"], *_ret)
             yield _ret
