@@ -99,3 +99,8 @@ What is on the list to be done?
 * ssh
 * make
 * watch
+
+How can I help?
+---------------
+
+You can do all the github type things, submit an issue in our `issue tracker <https://github.com/ilovetux/unitils/issues>`_ or fork and submit a pull request. If none of that appeals to you, you can always send me an email personally at me@ilovetux.com
