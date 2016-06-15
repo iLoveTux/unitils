@@ -14,6 +14,9 @@ init:
   - "%PYTHON%/python -c \"import struct;print( 8 * struct.calcsize(\'P\'))\""
 
 install:
+  - "%PYTHON%/Scripts/easy_install -U pip"
+  - "%PYTHON%/Scripts/easy_install lxml"
+  - "%PYTHON%/Scripts/pip install wheel"
   - "%PYTHON%/Scripts/pip install -r requirements.txt"
 
 
