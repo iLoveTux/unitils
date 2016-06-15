@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.org/iLoveTux/unitils.svg?branch=master
+    :target: https://travis-ci.org/iLoveTux/unitils
+
 What is it and why do I care?
 -----------------------------
 
