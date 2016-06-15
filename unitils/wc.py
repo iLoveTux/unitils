@@ -54,33 +54,33 @@ def wc(files,
             totals["longest_line"] = longest_line
 
         if not any((lines, byte_count, chars, words, max_line_length)):
-            yield (ret["lines"], ret["words"], ret["bytes"], ret["name"])
+            yield [ret["lines"], ret["words"], ret["bytes"], ret["name"]]
         else:
-            _ret = (ret["name"],)
+            _ret = [ret["name"]]
             if max_line_length:
-                _ret = (longest_line, *_ret)
+                _ret = _ret.insert(0, longest_line)
             if byte_count:
-                _ret = (ret["bytes"], *_ret)
+                _ret = _ret.insert(0, ret["bytes"])
             if chars:
-                _ret = (ret["chars"], *_ret)
+                _ret = _ret.insert(0, ret["chars"])
             if words:
-                _ret = (ret["words"], *_ret)
+                _ret = _ret.insert(0, ret["words"])
             if lines:
-                _ret = (ret["lines"], *_ret)
+                _ret = _ret.insert(0, ret["lines"])
             yield _ret
     if len(files) > 1:
         if not any((lines, byte_count, chars, words, max_line_length)):
-            yield (totals["lines"], totals["words"], totals["bytes"], totals["name"])
+            yield [totals["lines"], totals["words"], totals["bytes"], totals["name"]]
         else:
-            _ret = (totals["name"],)
+            _ret = [totals["name"]]
             if max_line_length:
-                _ret = (longest_line, *_ret)
+                _ret = _ret.insert(0, longest_line)
             if byte_count:
-                _ret = (totals["bytes"], *_ret)
+                _ret = _ret.insert(0, totals["bytes"])
             if chars:
-                _ret = (totals["chars"], *_ret)
+                _ret = _ret.insert(0, totals["chars"])
             if words:
-                _ret = (totals["words"], *_ret)
+                _ret = _ret.insert(0, totals["words"])
             if lines:
-                _ret = (totals["lines"], *_ret)
+                _ret = _ret.insert(0, totals["lines"])
             yield _ret
