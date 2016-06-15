@@ -4,6 +4,9 @@
 .. image:: https://ci.appveyor.com/api/projects/status/i8jnjgjojbr0scov?svg=true
     :target: https://ci.appveyor.com/project/iLoveTux/unitils
 
+.. image:: https://codecov.io/gh/iLoveTux/unitils/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/iLoveTux/unitils
+
 What is it and why do I care?
 -----------------------------
 
