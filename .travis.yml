@@ -6,17 +6,18 @@ python:
   - "3.3"
   - "3.4"
   - "3.5"
-  - "pypy"
   # does not have headers provided, please ask https://launchpad.net/~pypy/+archive/ppa
   # maintainers to fix their pypy-dev package.
+  - "pypy"
 # command to install dependencies
 allow_failures:
-  - python: 'pypy'
-  - python: '2.6'
-  - python: '2.7'
-  - python: '3.2'
-  - python: '3.3'
-  - python: '3.4'
+  - python:
+    - 'pypy'
+    - '2.6'
+    - '2.7'
+    - '3.2'
+    - '3.3'
+    - '3.4'
 
 before_install:
   - pip install codecov
