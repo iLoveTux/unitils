@@ -29,9 +29,9 @@ be useful.
 
 Unitils was written to be:
 
-    - `Fast <stats.dat>`_, everything is an iterator (where possible) and strives to be as efficient in both memory and cpu time. The linked download is the output of Python's cProfile, there are `tools <https://jiffyclub.github.io/snakeviz/>`_ with which you can visualize this data.
+    - Fast <stats.dat>, everything is an iterator (where possible) and strives to be as efficient in both memory and cpu time.
 
-    - `Tested <cover.html>`_, Unittests are at and will remain at 100% test coverage.
+    - Tested <cover.html>, Unittests are at and will remain at 100% test coverage.
 
     - Cross Platform, Written in Python these utilities can run on Windows, Linux and Mac OSx.
 
