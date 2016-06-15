@@ -1,6 +1,9 @@
 .. image:: https://travis-ci.org/iLoveTux/unitils.svg?branch=master
     :target: https://travis-ci.org/iLoveTux/unitils
 
+.. image:: https://ci.appveyor.com/api/projects/status/i8jnjgjojbr0scov?svg=true
+    :target: https://ci.appveyor.com/project/iLoveTux/unitils
+
 What is it and why do I care?
 -----------------------------
 
