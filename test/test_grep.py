@@ -43,7 +43,7 @@ class TestGrep(unittest.TestCase):
             "1 line\n",
             "1 Line\n",
         ]
-        with temp_file() as tmp:
+        with temp_file(dir=".") as tmp:
             tmp.write(test_data.encode("utf-8"))
             tmp.flush()
             filename = tmp.name
@@ -57,7 +57,7 @@ class TestGrep(unittest.TestCase):
             "2: 1 line\n",
             "4: 1 Line\n",
         ]
-        with temp_file() as tmp:
+        with temp_file(dir=".") as tmp:
             tmp.write(test_data.encode("utf-8"))
             tmp.flush()
             filename = tmp.name
@@ -67,7 +67,7 @@ class TestGrep(unittest.TestCase):
     def test_with_filename(self):
         """if line_numbers is True, grep should prepend line numbers
         """
-        with temp_file() as tmp:
+        with temp_file(dir=".") as tmp:
             filename = tmp.name
             expected = [
                 "{}: 2: 1 line\n".format(filename),
@@ -92,7 +92,7 @@ class TestGrep(unittest.TestCase):
             "1 line\n",
             "1 Line\n",
         ]
-        with temp_file() as tmp_1, temp_file() as tmp_2:
+        with temp_file(dir=".") as tmp_1, temp_file(dir=".") as tmp_2:
             tmp_1.write(test_data.encode("utf-8"))
             tmp_2.write(test_data.encode("utf-8"))
             tmp_1.flush()
@@ -117,7 +117,7 @@ class TestGrep(unittest.TestCase):
         self.assertEqual(results, expected)
 
     def test_color_will_be_added_when_color_is_true(self):
-        with temp_file() as tmp:
+        with temp_file(dir=".") as tmp:
             filename = tmp.name
             expected = [
                 "{}: {}: {}\n".format(magenta(filename), green("2"), red("1 line")),
@@ -135,7 +135,7 @@ class TestGrep(unittest.TestCase):
         self.assertEqual(results, expected)
 
     def test_invert_selection(self):
-        with temp_file() as tmp:
+        with temp_file(dir=".") as tmp:
             filename = tmp.name
             expected = [
             "{}: 1: line 1\n".format(filename),
@@ -172,7 +172,7 @@ use functions like this in Python source::
 
 Of course that is a contrived example, but you get the idea.
 """
-        with temp_file() as tmp:
+        with temp_file(dir=".") as tmp:
             tmp.write(content)
             tmp.flush()
             filename = tmp.name

@@ -28,7 +28,7 @@ class TestFind(unittest.TestCase):
     """Generic tests for unitils.find
     """
 
-    root = os.path.join(tempfile.gettempdir(), "_temp_unitils")
+    root = os.path.join(".", "_temp_unitils")
     @classmethod
     def setUpClass(cls):
         setup_temp_dir(cls.root)
