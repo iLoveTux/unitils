@@ -61,7 +61,7 @@ def grep(expr,
         if isinstance(fp, str):
             # If fp is a string, assume it is the path to a file,
             # open it and register its "closer" to execute on exit
-            files[index] = open(fp, "r", encoding="utf-8")
+            files[index] = open(fp, "r")
             atexit.register(files[index].close)
     for fp in files:
         for index, line in enumerate(fp):
