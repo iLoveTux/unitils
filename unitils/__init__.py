@@ -5,5 +5,6 @@ from .wc import wc
 __all__ = [
     "grep",
     "find",
-    "wc"
+    "wc",
+    "cli"
 ]

@@ -1,3 +1,7 @@
+************
+Introduction
+************
+
 .. image:: https://travis-ci.org/iLoveTux/unitils.svg?branch=master
     :target: https://travis-ci.org/iLoveTux/unitils
 
@@ -5,8 +9,9 @@
     :target: https://ci.appveyor.com/project/iLoveTux/unitils
 
 .. image:: https://codecov.io/gh/iLoveTux/unitils/branch/master/graph/badge.svg
-  :target: https://codecov.io/gh/iLoveTux/unitils
+   :target: https://codecov.io/gh/iLoveTux/unitils
 
+-----------------------------
 What is it and why do I care?
 -----------------------------
 
@@ -20,14 +25,13 @@ For instance, `grep.py` is designed to be used just like this::
 
 And from Python it can be used like this::
 
-  import os
+  from glob import iglob
   from unitils import grep
 
-  # remember though that shell expansion was done by the system's shell above
-  log_files = (f for f in os.listdir("/var/log/") if ".log" in f)
-  for match in grep("warn", log_files, ignore_case=True):
+  for match in grep("warn", iglob('/var/log/*.log'), ignore_case=True):
       print(match)
 
+--------------------
 Why should I use it?
 --------------------
 
@@ -38,9 +42,9 @@ be useful.
 
 Unitils was written to be:
 
-    - Fast <stats.dat>, everything is an iterator (where possible) and strives to be as efficient in both memory and cpu time.
+    - `Fast <https://ilovetux.github.io/unitils/stats.dat>`_, everything is an iterator (where possible) and strives to be as efficient in both memory and cpu time.
 
-    - Tested <cover.html>, Unittests are at and will remain at 100% test coverage.
+    - `Tested <https://ilovetux.github.io/unitils/cover.html>`_, Unittests are at and will remain at 100% test coverage.
 
     - Cross Platform, Written in Python these utilities can run on Windows, Linux and Mac OSx.
 
@@ -48,12 +52,13 @@ Unitils was written to be:
 
     - Open Source, This project is released under the `GPLv3 <https://www.gnu.org/licenses/gpl.txt>`_
 
-
+-----------------
 How does it work?
 -----------------
 
 Each command we target, we create a Python iterator which yields the output and send it to stdout. So we in effect have native, memory efficient access to many common utilities directly from within Python.
 
+----------------
 How do I get it?
 ----------------
 
@@ -61,7 +66,7 @@ To get the most supported version::
 
   $ pip install unitils
 
-To get the latest, "bleeding edge" version::
+To get the latest version::
 
   $ pip install https://github.com/ilovetux/unitils/archive/master.zip
 
@@ -69,6 +74,7 @@ For the nightlies::
 
   $ pip install https://github.com/ilovetux/unitils/archive/dev.zip
 
+-----------------------
 How do I run the tests?
 -----------------------
 
@@ -83,11 +89,13 @@ or alternately::
 
 In general, the master branch is what is available on PyPI.
 
+-----------------------------
 What is this compatible with?
 -----------------------------
 
-Unitils was written targeting Python 3.5.1, but may work on other versions as well, we plan to add support for earlier versions in the future. Besides the version of Python, unitils should work on all platforms on which Python runs.
+Unitils is tested with Python 3.5.1, but may work on other versions as well. Besides the version of Python, unitils should work on all platforms on which Python runs.
 
+----------------------------------------------------------
 What is the current list of utilities provided by unitils?
 ----------------------------------------------------------
 
@@ -95,6 +103,7 @@ What is the current list of utilities provided by unitils?
 * grep
 * wc
 
+-------------------------------
 What is on the list to be done?
 -------------------------------
 
@@ -109,7 +118,8 @@ What is on the list to be done?
 * make
 * watch
 
+---------------
 How can I help?
 ---------------
 
-You can do all the github type things, submit an issue in our `issue tracker <https://github.com/ilovetux/unitils/issues>`_ or fork and submit a pull request. If none of that appeals to you, you can always send me an email personally at me@ilovetux.com
+You can do all the github type things, submit an issue in our `issue tracker <https://github.com/ilovetux/unitils/issues>`_ or fork and submit a `pull request <https://github.com/ilovetux/unitils/pulls>`_. If none of that appeals to you, you can always send me an email personally at me@ilovetux.com
