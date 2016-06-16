@@ -1,4 +1,4 @@
-from __future__ import print_fuction
+from __future__ import print_function
 import os
 import shutil
 import unitils
@@ -24,12 +24,6 @@ def setup_temp_dir(root):
         with open(filename, "w") as fp:
             fp.write("Hello, world from: {}\n".format(filename))
 
-def tear_down_temp_dir(root):
-    shutil.rmtree(
-        root,
-        onerror=lambda *args: print("failed to remove {}".format(args[1]))
-    )
-
 class TestFind(unittest.TestCase):
     """Generic tests for unitils.find
     """
@@ -45,6 +39,7 @@ class TestFind(unittest.TestCase):
     def tearDownClass(cls):
 #        tear_down_temp_dir(cls.root)
         os.chdir(cls.old_dir)
+        shutil.rmtree(cls.root)
 
     def test_no_params_finds_all_files(self):
         """calling find() with no params should act like issuing "$ find"
