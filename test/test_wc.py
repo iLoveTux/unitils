@@ -20,7 +20,7 @@ class TestWC(unittest.TestCase):
         """wc should be able to count the lines, words and bytes of
         files
         """
-        with NamedTemporaryFile() as fp:
+        with NamedTemporaryFile(dir=".") as fp:
             prep_fp(fp)
             expected = [(2, 9, 35, fp.name)]
             # Must accept either a filename or a file-like object
@@ -32,7 +32,7 @@ class TestWC(unittest.TestCase):
     def test_wc_will_yield_only_linecount(self):
         """wc(files, lines=True) should behave like `wc -l`
         """
-        with NamedTemporaryFile() as fp:
+        with NamedTemporaryFile(dir=".") as fp:
             prep_fp(fp)
             expected = [(2, fp.name)]
             results = list(unitils.wc((fp.name,), lines=True))
@@ -41,7 +41,7 @@ class TestWC(unittest.TestCase):
     def test_wc_will_yield_only_byte_count(self):
         """wc(files, byte_count=True) should behave like `wc -c`
         """
-        with NamedTemporaryFile() as fp:
+        with NamedTemporaryFile(dir=".") as fp:
             prep_fp(fp)
             expected = [(35, fp.name)]
             results = list(unitils.wc((fp.name,), byte_count=True))
@@ -50,7 +50,7 @@ class TestWC(unittest.TestCase):
     def test_wc_will_yield_only_word_count(self):
         """wc(files, words=True) should behave like `wc -w`
         """
-        with NamedTemporaryFile() as fp:
+        with NamedTemporaryFile(dir=".") as fp:
             prep_fp(fp)
             expected = [(9, fp.name)]
             results = list(unitils.wc((fp.name,), words=True))
@@ -59,7 +59,7 @@ class TestWC(unittest.TestCase):
     def test_wc_will_yield_only_char_count(self):
         """wc(files, chars=True) should behave like `wc -m`
         """
-        with NamedTemporaryFile() as fp:
+        with NamedTemporaryFile(dir=".") as fp:
             prep_fp(fp)
             expected = [(35, fp.name)]
             results = list(unitils.wc((fp.name,), chars=True))
@@ -69,7 +69,7 @@ class TestWC(unittest.TestCase):
         """wc(files, chars=True, lines=True, words=True,
         byte_count=True) should behave like `wc -cmlw`
         """
-        with NamedTemporaryFile() as fp:
+        with NamedTemporaryFile(dir=".") as fp:
             prep_fp(fp)
             expected = [(2, 9, 35, 35, fp.name)]
             results = list(unitils.wc(
@@ -85,7 +85,7 @@ class TestWC(unittest.TestCase):
     def test_wc_will_yield_only_max_line_length(self):
         """wc(files, max_line_length=True) should behave like `wc -L`
         """
-        with NamedTemporaryFile() as fp:
+        with NamedTemporaryFile(dir=".") as fp:
             prep_fp(fp)
             expected = [(19, fp.name)]
             results = list(unitils.wc((fp.name,), max_line_length=True))
@@ -95,7 +95,7 @@ class TestWC(unittest.TestCase):
         """If more than one file is specified, a total line should be
         added to the end of the output
         """
-        with NamedTemporaryFile() as fp_1, NamedTemporaryFile() as fp_2:
+        with NamedTemporaryFile(dir=".") as fp_1, NamedTemporaryFile(dir=".") as fp_2:
             for fp in (fp_1, fp_2):
                 prep_fp(fp)
             expected = [
@@ -109,7 +109,7 @@ class TestWC(unittest.TestCase):
     def test_wc_adds_totals_if_more_than_one_file_and_works_with_all_options(self):
         """All options should work with multiple files
         """
-        with NamedTemporaryFile() as fp_1, NamedTemporaryFile() as fp_2:
+        with NamedTemporaryFile(dir=".") as fp_1, NamedTemporaryFile(dir=".") as fp_2:
             for fp in (fp_1, fp_2):
                 prep_fp(fp)
             expected = [

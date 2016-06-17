@@ -1,9 +1,16 @@
+from __future__ import print_function
 import sys
 import unitils
 import argparse
 import colorama; colorama.init()
 
-def grep():
+def grep(argv=None):
+    """search for patterns of text in a set of files.
+
+    :param argv: The list of args to be parsed as options (defaults to sys.argv[1:])
+    :type argv: list
+    """
+    argv = sys.argv[1:] if argv is None else argv
     parser = argparse.ArgumentParser(
         prog="grep.py",
         description="A simplistic grep-like utility",
@@ -35,7 +42,7 @@ def grep():
         "files", nargs="*", default=[sys.stdin],
         help="The file(s) to search for expr"
     )
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     kwargs = {
         "expr": args.expr,
         "files": args.files,

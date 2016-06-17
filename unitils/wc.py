@@ -2,6 +2,83 @@ import os
 import re
 import atexit
 
+word = re.compile(r"(.*?)\s+")
+
+def _examine_fp(fp):
+    """Examine fp and returns the interesting metrics.
+
+    :param fp: The file-like object to examine
+    :type fp: file
+    :returns: tuple containing number of lines, words, bytes, chars, max_line_length and filename
+    :rtype: tuple
+    """
+    max_line_length         = 0
+    current_lines           = 0
+    current_chars           = 0
+    current_words           = 0
+    current_bytes           = os.path.getsize(fp.name)
+    for line in fp:
+        current_lines += 1
+        current_words += len(word.findall(line.decode("utf-8")))
+        current_chars += len(line)
+        current_line_length = len(line.strip())
+        if max_line_length < current_line_length:
+            max_line_length = current_line_length
+    return (
+        current_lines,
+        current_words,
+        current_bytes,
+        current_chars,
+        max_line_length,
+        fp.name
+    )
+
+def _gather_output(counts,
+                  lines,
+                  byte_count,
+                  chars,
+                  words,
+                  max_line_length):
+    """Takes all available metrics and returns information filtered to reflect user
+    options.
+
+    :param counts: The actual measurments returned by _examine_fp(fp)
+    :param lines: Whether to include line counts
+    :param byte_count: Whether to include bytes count
+    :param chars: Whether to include chars count
+    :param words: Whether to include word count
+    :param max_line_lenth: Whether to include max_line_length
+
+    :type max_line_lenth: boolean
+    :type words: boolean
+    :type chars: boolean
+    :type byte_count: boolean
+    :type lines: boolean
+    :type counts: tuple
+    """
+    current_lines           = counts[0]
+    current_words           = counts[1]
+    current_bytes           = counts[2]
+    current_chars           = counts[3]
+    current_max_line_length = counts[4]
+    current_name            = counts[5]
+    if not any((lines, byte_count, chars, words, max_line_length)):
+        return (current_lines, current_words, current_bytes, current_name)
+    else:
+        ret = (current_name, )
+        if max_line_length:
+            ret = (current_max_line_length,) + ret
+        if byte_count:
+            ret = (current_bytes,) + ret
+        if chars:
+            ret = (current_chars,) + ret
+        if words:
+            ret = (current_words,) + ret
+        if lines:
+            ret = (current_lines,) + ret
+        return ret
+
+
 def wc(files,
        lines=False,
        byte_count=False,
@@ -10,77 +87,58 @@ def wc(files,
        max_line_length=False):
     """Yields newline, word and byte counts for each file and a total
     line if more than one file is specified
+
+    :param files: An iterable of open, file-like objects or strings containing filenames
+    :param lines: Whether to include line counts
+    :param byte_count: Whether to include bytes count
+    :param chars: Whether to include chars count
+    :param words: Whether to include word count
+    :param max_line_lenth: Whether to include max_line_length
+
+    :type max_line_lenth: boolean
+    :type words: boolean
+    :type chars: boolean
+    :type byte_count: boolean
+    :type lines: boolean
+    :type files: iterable
     """
-    totals = {
-        "lines": 0,
-        "words": 0,
-        "bytes": 0,
-        "chars": 0,
-        "longest_line": 0,
-        "name": "total"
-    }
-    word = re.compile(r"(.*?)\s+")
-    fps = []
-    for f in files:
-        if isinstance(f, str):
-            fp = open(f, "rb")
-            fps.append(fp)
+    total_lines       = 0
+    total_bytes       = 0
+    total_chars       = 0
+    total_words       = 0
+    total_line_length = 0
+
+    for fname in files:
+        if isinstance(fname, str):
+            fp = open(fname, "rb")
             atexit.register(fp.close)
         else:
-            fps.append(f)
-    for fp in fps:
-        ret = {
-            "words": 0,
-            "lines": 0,
-            "bytes": os.path.getsize(fp.name),
-            "chars": 0,
-            "name": fp.name
-        }
+            fp = fname
 
-        longest_line = 0
-        for index, line in enumerate(fp):
-            _words = word.findall(line.decode("utf-8"))
-            ret["lines"] += 1
-            ret["words"] += len(_words)
-            ret["chars"] += len(line)
-            _length = len(line.strip())
-            longest_line = _length if _length > longest_line else longest_line
+        current_stats = _examine_fp(fp)
+        yield _gather_output(current_stats,
+                             lines,
+                             byte_count,
+                             chars,
+                             words,
+                             max_line_length)
 
-        totals["words"] += ret["words"]
-        totals["lines"] += ret["lines"]
-        totals["bytes"] += ret["bytes"]
-        totals["chars"] += ret["chars"]
-        if longest_line > totals["longest_line"]:
-            totals["longest_line"] = longest_line
-
-        if not any((lines, byte_count, chars, words, max_line_length)):
-            yield (ret["lines"], ret["words"], ret["bytes"], ret["name"])
-        else:
-            _ret = (ret["name"],)
-            if max_line_length:
-                _ret = (longest_line, *_ret)
-            if byte_count:
-                _ret = (ret["bytes"], *_ret)
-            if chars:
-                _ret = (ret["chars"], *_ret)
-            if words:
-                _ret = (ret["words"], *_ret)
-            if lines:
-                _ret = (ret["lines"], *_ret)
-            yield _ret
+        total_lines += current_stats[0]
+        total_words += current_stats[1]
+        total_bytes += current_stats[2]
+        total_chars += current_stats[3]
+        if total_line_length < current_stats[4]:
+            total_line_length = current_stats[4]
     if len(files) > 1:
-        if not any((lines, byte_count, chars, words, max_line_length)):
-            yield (totals["lines"], totals["words"], totals["bytes"], totals["name"])
-        else:
-            _ret = (totals["name"],)
-            if max_line_length:
-                _ret = (longest_line, *_ret)
-            if byte_count:
-                _ret = (totals["bytes"], *_ret)
-            if chars:
-                _ret = (totals["chars"], *_ret)
-            if words:
-                _ret = (totals["words"], *_ret)
-            if lines:
-                _ret = (totals["lines"], *_ret)
-            yield _ret
+        yield _gather_output(
+            (
+                total_lines,       total_words,
+                total_bytes,       total_chars,
+                total_line_length, "total"
+            ),
+            lines,
+            byte_count,
+            chars,
+            words,
+            max_line_length
+        )
