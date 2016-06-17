@@ -47,17 +47,17 @@ class TestFind(unittest.TestCase):
         """
         expected = [
             ".",
-            "./test.txt",
-            "./Test.txt",
-            "./branch-1",
-            "./branch-1/test.txt",
-            "./branch-1/Test.txt",
-            "./branch-1/level-2",
-            "./branch-1/level-2/test.txt",
-            "./branch-1/level-2/Test.txt",
-            "./branch-1/level-2/test",
-            "./branch-1/level-2/test/test.txt",
-            "./branch-1/level-2/test/Test.txt",
+            os.path.join(".", "test.txt"),
+            os.path.join(".", "Test.txt"),
+            os.path.join(".", "branch-1"),
+            os.path.join(".", "branch-1", "test.txt"),
+            os.path.join(".", "branch-1", "Test.txt"),
+            os.path.join(".", "branch-1", "level-2"),
+            os.path.join(".", "branch-1", "level-2", "test.txt"),
+            os.path.join(".", "branch-1", "level-2", "Test.txt"),
+            os.path.join(".", "branch-1", "level-2", "test"),
+            os.path.join(".", "branch-1", "level-2", "test", "test.txt"),
+            os.path.join(".", "branch-1", "level-2", "test", "Test.txt"),
         ]
         results = list(unitils.find())
         self.assertEqual(sorted(expected), sorted(results))
@@ -66,10 +66,10 @@ class TestFind(unittest.TestCase):
         """find(name="test.txt") should behave like "$ find . -name test.txt"
         """
         expected = [
-            "./test.txt",
-            "./branch-1/test.txt",
-            "./branch-1/level-2/test.txt",
-            "./branch-1/level-2/test/test.txt",
+            os.path.join(".", "test.txt"),
+            os.path.join(".", "branch-1", "test.txt"),
+            os.path.join(".", "branch-1", "level-2", "test.txt"),
+            os.path.join(".", "branch-1", "level-2", "test", "test.txt"),
         ]
         results = list(unitils.find(name="test.txt"))
         self.assertEqual(sorted(expected), sorted(results))
@@ -78,7 +78,7 @@ class TestFind(unittest.TestCase):
         """find(name="branch-1") should behave like "$ find . -name branch-1"
         """
         expected = [
-            "./branch-1",
+            os.path.join(".", "branch-1"),
         ]
         results = list(unitils.find(name="branch-1"))
         self.assertEqual(sorted(expected), sorted(results))
@@ -87,9 +87,9 @@ class TestFind(unittest.TestCase):
         """find("branch-1", name="test.txt") should behave like "$ find branch-1 -name test.txt"
         """
         expected = [
-            "branch-1/test.txt",
-            "branch-1/level-2/test.txt",
-            "branch-1/level-2/test/test.txt",
+            os.path.join("branch-1", "test.txt"),
+            os.path.join("branch-1", "level-2", "test.txt"),
+            os.path.join("branch-1", "level-2", "test", "test.txt"),
         ]
         results = list(unitils.find(path="branch-1", name="test.txt"))
         self.assertEqual(sorted(expected), sorted(results))
@@ -98,32 +98,32 @@ class TestFind(unittest.TestCase):
         """find("./branch-1", name="test.txt") should behave like "$ find ./branch-1 -name test.txt"
         """
         expected = [
-            "./branch-1/test.txt",
-            "./branch-1/level-2/test.txt",
-            "./branch-1/level-2/test/test.txt",
+            os.path.join(".", "branch-1", "test.txt"),
+            os.path.join(".", "branch-1", "level-2", "test.txt"),
+            os.path.join(".", "branch-1", "level-2", "test", "test.txt"),
         ]
-        results = list(unitils.find(path="./branch-1", name="test.txt"))
+        results = list(unitils.find(path=os.path.join(".", "branch-1"), name="test.txt"))
         self.assertEqual(sorted(expected), sorted(results))
 
     def test_iname_param_limits_like_it_should(self):
         """find("./branch-1", iname="test.txt") should behave like "$ find ./branch-1 -iname test.txt"
         """
         expected = [
-            "./branch-1/test.txt",
-            "./branch-1/Test.txt",
-            "./branch-1/level-2/test.txt",
-            "./branch-1/level-2/Test.txt",
-            "./branch-1/level-2/test/test.txt",
-            "./branch-1/level-2/test/Test.txt",
+            os.path.join(".", "branch-1", "test.txt"),
+            os.path.join(".", "branch-1", "Test.txt"),
+            os.path.join(".", "branch-1", "level-2", "test.txt"),
+            os.path.join(".", "branch-1", "level-2", "Test.txt"),
+            os.path.join(".", "branch-1", "level-2", "test", "test.txt"),
+            os.path.join(".", "branch-1", "level-2", "test", "Test.txt"),
         ]
-        results = list(unitils.find(path="./branch-1", iname="test.txt"))
+        results = list(unitils.find(path=os.path.join(".", "branch-1"), iname="test.txt"))
         self.assertEqual(sorted(expected), sorted(results))
 
     def test_type_param_limits_as_it_should(self):
         """find(ftype="d", name="name*")
         """
         expected = [
-            "./branch-1/level-2/test",
+            os.path.join(".", "branch-1", "level-2", "test"),
         ]
         results = list(unitils.find(".", ftype="d", name="test*"))
         self.assertEqual(sorted(expected), sorted(results))
