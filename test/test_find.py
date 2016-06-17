@@ -4,7 +4,6 @@ import os
 import shutil
 import unitils
 import unittest
-import tempfile
 
 
 class TestFind(unittest.TestCase):
@@ -14,12 +13,11 @@ class TestFind(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.test_data_dir = make_test_data_directory()
-        cls.old_dir = os.getcwd()
+        cls.old_dir = os.path.abspath(os.getcwd())
         os.chdir(cls.test_data_dir)
 
     @classmethod
     def tearDownClass(cls):
-#        tear_down_temp_dir(cls.root)
         os.chdir(cls.old_dir)
         shutil.rmtree(cls.test_data_dir)
 

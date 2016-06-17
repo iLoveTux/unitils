@@ -27,16 +27,16 @@ def make_test_data_directory(root="."):
             os.fsync(fp.fileno())
     return tmp_dir
 
-test_data = """line 1
+_test_data = """line 1
 1 line
 Line 1
 1 Line
 this
 that
 the other
-""".encode("utf-8")
+"""
 
-def make_file_for_grep_tests(root=".", test_data=test_data):
+def make_file_for_grep_tests(root=".", test_data=_test_data):
     filename = os.path.join(root, "test-file.{}.txt".format(uuid()))
     with open(filename, "w") as fp:
         fp.write(test_data)

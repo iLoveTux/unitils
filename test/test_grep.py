@@ -46,9 +46,8 @@ class TestGrep(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        pass
-#        os.remove(cls.test_file_1)
-#        os.remove(cls.test_file_2)
+        os.remove(cls.test_file_1)
+        os.remove(cls.test_file_2)
 
     def test_grep_will_find_lines(self):
         """given regex, grep should find all occurances within file
@@ -156,7 +155,7 @@ class TestGrep(unittest.TestCase):
             red(r"\g<0>"),
             """    for line in grep(r"\d+:\s\w+", "/path/to/file"):\n""",
         )
-        content = b"""In addition to the command line utilities, you will also have a Python library which
+        content = """In addition to the command line utilities, you will also have a Python library which
 contains the same functionality. I have routinely found it useful to be able to
 use functions like this in Python source::
 
