@@ -28,16 +28,16 @@ class TestFind(unittest.TestCase):
         expected = [
             ".",
             os.path.join(".", "test.txt"),
-            os.path.join(".", "Test.txt"),
+            os.path.join(".", "Test_.txt"),
             os.path.join(".", "branch-1"),
             os.path.join(".", "branch-1", "test.txt"),
-            os.path.join(".", "branch-1", "Test.txt"),
+            os.path.join(".", "branch-1", "Test_.txt"),
             os.path.join(".", "branch-1", "level-2"),
             os.path.join(".", "branch-1", "level-2", "test.txt"),
-            os.path.join(".", "branch-1", "level-2", "Test.txt"),
+            os.path.join(".", "branch-1", "level-2", "Test_.txt"),
             os.path.join(".", "branch-1", "level-2", "test"),
             os.path.join(".", "branch-1", "level-2", "test", "test.txt"),
-            os.path.join(".", "branch-1", "level-2", "test", "Test.txt"),
+            os.path.join(".", "branch-1", "level-2", "test", "Test_.txt"),
         ]
         results = list(unitils.find())
         self.assertEqual(set(expected), set(results))
@@ -90,13 +90,13 @@ class TestFind(unittest.TestCase):
         """
         expected = [
             os.path.join(".", "branch-1", "test.txt"),
-            os.path.join(".", "branch-1", "Test.txt"),
+            os.path.join(".", "branch-1", "Test_.txt"),
             os.path.join(".", "branch-1", "level-2", "test.txt"),
-            os.path.join(".", "branch-1", "level-2", "Test.txt"),
+            os.path.join(".", "branch-1", "level-2", "Test_.txt"),
             os.path.join(".", "branch-1", "level-2", "test", "test.txt"),
-            os.path.join(".", "branch-1", "level-2", "test", "Test.txt"),
+            os.path.join(".", "branch-1", "level-2", "test", "Test_.txt"),
         ]
-        results = list(unitils.find(path=os.path.join(".", "branch-1"), iname="test.txt"))
+        results = list(unitils.find(path=os.path.join(".", "branch-1"), iname="test*.txt"))
         self.assertEqual(set(expected), set(results))
 
     def test_type_param_limits_as_it_should(self):

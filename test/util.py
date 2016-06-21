@@ -15,10 +15,10 @@ def make_test_data_directory(root="."):
         os.path.join(tmp_dir, "branch-1", "test.txt"),
         os.path.join(tmp_dir, "branch-1", "level-2", "test.txt"),
         os.path.join(tmp_dir, "branch-1", "level-2", "test", "test.txt"),
-        os.path.join(tmp_dir, "Test.txt"),
-        os.path.join(tmp_dir, "branch-1", "Test.txt"),
-        os.path.join(tmp_dir, "branch-1", "level-2", "Test.txt"),
-        os.path.join(tmp_dir, "branch-1", "level-2", "test", "Test.txt"),
+        os.path.join(tmp_dir, "Test_.txt"),
+        os.path.join(tmp_dir, "branch-1", "Test_.txt"),
+        os.path.join(tmp_dir, "branch-1", "level-2", "Test_.txt"),
+        os.path.join(tmp_dir, "branch-1", "level-2", "test", "Test_.txt"),
     ]
     for filename in filenames:
         with open(filename, "w") as fp:
