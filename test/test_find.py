@@ -40,7 +40,7 @@ class TestFind(unittest.TestCase):
             os.path.join(".", "branch-1", "level-2", "test", "Test.txt"),
         ]
         results = list(unitils.find())
-        self.assertEqual(sorted(expected), sorted(results))
+        self.assertEqual(set(expected), set(results))
 
     def test_name_param_limits_like_it_should(self):
         """find(name="test.txt") should behave like "$ find . -name test.txt"
@@ -52,7 +52,7 @@ class TestFind(unittest.TestCase):
             os.path.join(".", "branch-1", "level-2", "test", "test.txt"),
         ]
         results = list(unitils.find(name="test.txt"))
-        self.assertEqual(sorted(expected), sorted(results))
+        self.assertEqual(set(expected), set(results))
 
     def test_name_param_limits_like_it_should_for_directories(self):
         """find(name="branch-1") should behave like "$ find . -name branch-1"
@@ -61,7 +61,7 @@ class TestFind(unittest.TestCase):
             os.path.join(".", "branch-1"),
         ]
         results = list(unitils.find(name="branch-1"))
-        self.assertEqual(sorted(expected), sorted(results))
+        self.assertEqual(set(expected), set(results))
 
     def test_path_param_limits_like_it_should(self):
         """find("branch-1", name="test.txt") should behave like "$ find branch-1 -name test.txt"
@@ -72,7 +72,7 @@ class TestFind(unittest.TestCase):
             os.path.join("branch-1", "level-2", "test", "test.txt"),
         ]
         results = list(unitils.find(path="branch-1", name="test.txt"))
-        self.assertEqual(sorted(expected), sorted(results))
+        self.assertEqual(set(expected), set(results))
 
     def test_relative_path_param_limits_like_it_should(self):
         """find("./branch-1", name="test.txt") should behave like "$ find ./branch-1 -name test.txt"
@@ -83,7 +83,7 @@ class TestFind(unittest.TestCase):
             os.path.join(".", "branch-1", "level-2", "test", "test.txt"),
         ]
         results = list(unitils.find(path=os.path.join(".", "branch-1"), name="test.txt"))
-        self.assertEqual(sorted(expected), sorted(results))
+        self.assertEqual(set(expected), set(results))
 
     def test_iname_param_limits_like_it_should(self):
         """find("./branch-1", iname="test.txt") should behave like "$ find ./branch-1 -iname test.txt"
@@ -97,7 +97,7 @@ class TestFind(unittest.TestCase):
             os.path.join(".", "branch-1", "level-2", "test", "Test.txt"),
         ]
         results = list(unitils.find(path=os.path.join(".", "branch-1"), iname="test.txt"))
-        self.assertEqual(sorted(expected), sorted(results))
+        self.assertEqual(set(expected), set(results))
 
     def test_type_param_limits_as_it_should(self):
         """find(ftype="d", name="name*")
@@ -106,7 +106,7 @@ class TestFind(unittest.TestCase):
             os.path.join(".", "branch-1", "level-2", "test"),
         ]
         results = list(unitils.find(".", ftype="d", name="test*"))
-        self.assertEqual(sorted(expected), sorted(results))
+        self.assertEqual(set(expected), set(results))
 
     def test_type_param_D_not_implemented(self):
         with self.assertRaises(NotImplementedError) as exc:
