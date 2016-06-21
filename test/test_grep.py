@@ -1,8 +1,10 @@
+import os
 import re
+from io import StringIO
+from time import sleep
 import unitils
 import unittest
 import colorama
-from tempfile import NamedTemporaryFile as temp_file
 
 def magenta(text):
     return "{}{}{}".format(
@@ -25,14 +27,15 @@ def red(text):
         colorama.Fore.RESET
     )
 
-test_data = """line 1
-1 line
-Line 1
-1 Line
-this
-that
-the other
-"""
+test_data = (
+    u"line 1",
+    u"1 line",
+    u"Line 1",
+    u"1 Line",
+    u"this",
+    u"that",
+    u"the other"
+)
 
 class TestGrep(unittest.TestCase):
 
@@ -40,66 +43,50 @@ class TestGrep(unittest.TestCase):
         """given regex, grep should find all occurances within file
         """
         expected = [
-            "1 line\n",
-            "1 Line\n",
+            "1 line",
+            "1 Line",
         ]
-        with temp_file(dir=".") as tmp:
-            tmp.write(test_data.encode("utf-8"))
-            tmp.flush()
-            filename = tmp.name
-            results = list(unitils.grep(r"^\d+.*", filename))
+        results = list(unitils.grep(r"^\d+.*", test_data))
         self.assertEqual(results, expected)
 
     def test_line_numbers(self):
         """if line_numbers is True, grep should prepend line numbers
         """
         expected = [
-            "2: 1 line\n",
-            "4: 1 Line\n",
+            "2: 1 line",
+            "4: 1 Line",
         ]
-        with temp_file(dir=".") as tmp:
-            tmp.write(test_data.encode("utf-8"))
-            tmp.flush()
-            filename = tmp.name
-            results = list(unitils.grep(r"^\d+.*", filename, line_numbers=True))
+        results = list(unitils.grep(r"^\d+.*", test_data, line_numbers=True))
         self.assertEqual(results, expected)
 
     def test_with_filename(self):
         """if line_numbers is True, grep should prepend line numbers
         """
-        with temp_file(dir=".") as tmp:
-            filename = tmp.name
-            expected = [
-                "{}: 2: 1 line\n".format(filename),
-                "{}: 4: 1 Line\n".format(filename),
-            ]
-            tmp.write(test_data.encode("utf-8"))
-            tmp.flush()
-            results = list(unitils.grep(
-                r"^\d+.*",
-                filename,
-                line_numbers=True,
-                filenames=True
-            ))
+        expected = [
+            "<stdin>: 2: 1 line",
+            "<stdin>: 4: 1 Line",
+        ]
+        results = list(unitils.grep(
+            r"^\d+.*",
+            test_data,
+            line_numbers=True,
+            filenames=True
+        ))
         self.assertEqual(results, expected)
 
     def test_with_list_of_filenames(self):
         """given regex, grep should find all occurances within file
         """
         expected = [
-            "1 line\n",
-            "1 Line\n",
-            "1 line\n",
-            "1 Line\n",
+            "1 line",
+            "1 Line",
+            "1 line",
+            "1 Line",
         ]
-        with temp_file(dir=".") as tmp_1, temp_file(dir=".") as tmp_2:
-            tmp_1.write(test_data.encode("utf-8"))
-            tmp_2.write(test_data.encode("utf-8"))
-            tmp_1.flush()
-            tmp_2.flush()
-            filename_1 = tmp_1.name
-            filename_2 = tmp_2.name
-            results = list(unitils.grep(r"^\d+.*", [filename_1, filename_2]))
+        results = list(unitils.grep(
+            r"^\d+.*",
+            [test_data, test_data]
+        ))
         self.assertEqual(results, expected)
 
     def test_with_file_object(self):
@@ -109,50 +96,47 @@ class TestGrep(unittest.TestCase):
             "1 line\n",
             "1 Line\n",
         ]
-        with temp_file("w+") as tmp:
-            tmp.write(test_data)
-            tmp.flush()
-            tmp.seek(0)
-            results = list(unitils.grep(r"^\d+.*", tmp.file))
+        fp = StringIO("\n".join(test_data))
+        results = list(unitils.grep(r"^\d+.*", fp))
         self.assertEqual(results, expected)
 
     def test_color_will_be_added_when_color_is_true(self):
-        with temp_file(dir=".") as tmp:
-            filename = tmp.name
-            expected = [
-                "{}: {}: {}\n".format(magenta(filename), green("2"), red("1 line")),
-                "{}: {}: {}\n".format(magenta(filename), green("4"), red("1 Line")),
-            ]
-            tmp.write(test_data.encode("utf-8"))
-            tmp.flush()
-            results = list(unitils.grep(
-                r"^\d+.*",
-                filename,
-                line_numbers=True,
-                filenames=True,
-                color=True
-            ))
+        expected = [
+            "{}: {}: {}".format(
+                magenta("<stdin>"),
+                green("2"),
+                red("1 line")
+            ),
+            "{}: {}: {}".format(
+                magenta("<stdin>"),
+                green("4"),
+                red("1 Line")
+            ),
+        ]
+        results = list(unitils.grep(
+            r"^\d+.*",
+            test_data,
+            line_numbers=True,
+            filenames=True,
+            color=True
+        ))
         self.assertEqual(results, expected)
 
     def test_invert_selection(self):
-        with temp_file(dir=".") as tmp:
-            filename = tmp.name
-            expected = [
-            "{}: 1: line 1\n".format(filename),
-            "{}: 3: Line 1\n".format(filename),
-            "{}: 5: this\n".format(filename),
-            "{}: 6: that\n".format(filename),
-            "{}: 7: the other\n".format(filename),
-            ]
-            tmp.write(test_data.encode("utf-8"))
-            tmp.flush()
-            results = list(unitils.grep(
-                r"^\d+.*",
-                filename,
-                line_numbers=True,
-                filenames=True,
-                invert_match=True
-            ))
+        expected = [
+        "<stdin>: 1: line 1",
+        "<stdin>: 3: Line 1",
+        "<stdin>: 5: this",
+        "<stdin>: 6: that",
+        "<stdin>: 7: the other",
+        ]
+        results = list(unitils.grep(
+            r"^\d+.*",
+            test_data,
+            line_numbers=True,
+            filenames=True,
+            invert_match=True
+        ))
         self.assertEqual(results, expected)
 
     def test_color_match_works_as_expected(self):
@@ -161,7 +145,7 @@ class TestGrep(unittest.TestCase):
             red(r"\g<0>"),
             """    for line in grep(r"\d+:\s\w+", "/path/to/file"):\n""",
         )
-        content = b"""In addition to the command line utilities, you will also have a Python library which
+        content = u"""In addition to the command line utilities, you will also have a Python library which
 contains the same functionality. I have routinely found it useful to be able to
 use functions like this in Python source::
 
@@ -172,13 +156,10 @@ use functions like this in Python source::
 
 Of course that is a contrived example, but you get the idea.
 """
-        with temp_file(dir=".") as tmp:
-            tmp.write(content)
-            tmp.flush()
-            filename = tmp.name
-            results = list(unitils.grep(
-                r"\w",
-                filename,
-                color=True
-            ))
+        fp = StringIO(content)
+        results = list(unitils.grep(
+            r"\w",
+            fp,
+            color=True
+        ))
         self.assertIn(expected, results)

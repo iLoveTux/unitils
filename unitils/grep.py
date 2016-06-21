@@ -50,30 +50,19 @@ def grep(expr,
     :type expr: str, compiled regex
     :type files: str, list, file
     """
-    if isinstance(expr, str):
-        # Compile the str into a regex object, otherwise
-        # assume that expr can be used directly, expr should
-        # have at least two methods, `search` and `sub`
-        expr = re.compile(expr)
-    if not isinstance(files, list):
-        files = [files]
-    for index, fp in enumerate(list(files)):
-        if isinstance(fp, str):
-            # If fp is a string, assume it is the path to a file,
-            # open it and register its "closer" to execute on exit
-            files[index] = open(fp, "r")
-            atexit.register(files[index].close)
+    expr = re.compile(expr) if isinstance(expr, str) else expr
+    files = files if isinstance(files, list) else [files]
     for fp in files:
-        for index, line in enumerate(fp):
-            ret = line
-            line_number, filename = str(index+1), fp.name
-            if bool(expr.search(ret)) != invert_match:
-                if color:
-                    line_number, filename = green(line_number), magenta(filename)
-                    if not invert_match:
-                        ret = expr.sub(red(r"\g<0>"), ret)
-                if line_numbers:
-                    ret = "{}: {}".format(line_number, ret)
-                if filenames:
-                    ret = "{}: {}".format(filename, ret)
-                yield ret
+        for line_number, line in enumerate(fp, start=1):
+            if bool(expr.search(line)) == invert_match:
+                continue
+            line = expr.sub(red(r"\g<0>"), line) if color else line
+            if line_numbers:
+                line = "{}: {}".format(green(line_number) if color else line_number, line)
+            if filenames:
+                if hasattr(fp, "name"):
+                    line = "{}: {}".format(magenta(fp.name) if color else fp.name, line)
+                else:
+                    line = "{}: {}".format(magenta("<stdin>") if color else "<stdin>", line)
+
+            yield line
