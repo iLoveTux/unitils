@@ -52,10 +52,6 @@ def grep(expr,
     """
     expr = re.compile(expr) if isinstance(expr, str) else expr
     files = files if isinstance(files, list) else [files]
-    for index, fp in enumerate(list(files)):
-        if isinstance(fp, str):
-            files[index] = open(fp, "r")
-            atexit.register(files[index].close)
     for fp in files:
         for line_number, line in enumerate(fp, start=1):
             if bool(expr.search(line)) == invert_match:
@@ -64,5 +60,9 @@ def grep(expr,
             if line_numbers:
                 line = "{}: {}".format(green(line_number) if color else line_number, line)
             if filenames:
-                line = "{}: {}".format(magenta(fp.name) if color else fp.name, line)
+                if hasattr(fp, "name"):
+                    line = "{}: {}".format(magenta(fp.name) if color else fp.name, line)
+                else:
+                    line = "{}: {}".format(magenta("<stdin>") if color else "<stdin>", line)
+
             yield line

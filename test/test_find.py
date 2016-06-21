@@ -12,7 +12,7 @@ class TestFind(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.test_data_dir = make_test_data_directory()
+        cls.test_data_dir = os.path.abspath(make_test_data_directory())
         cls.old_dir = os.path.abspath(os.getcwd())
         os.chdir(cls.test_data_dir)
 

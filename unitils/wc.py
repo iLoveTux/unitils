@@ -16,21 +16,23 @@ def _examine_fp(fp):
     current_lines           = 0
     current_chars           = 0
     current_words           = 0
-    current_bytes           = os.path.getsize(fp.name)
+    current_bytes           = 0
     for line in fp:
         current_lines += 1
-        current_words += len(word.findall(line.decode("utf-8")))
+        current_words += len(word.findall(line))
         current_chars += len(line)
         current_line_length = len(line.strip())
         if max_line_length < current_line_length:
             max_line_length = current_line_length
+    fp.seek(0, os.SEEK_END)
+    filename = fp.name if hasattr(fp, "name") else "<stdin>"
     return (
         current_lines,
         current_words,
-        current_bytes,
+        fp.tell(),
         current_chars,
         max_line_length,
-        fp.name
+        filename
     )
 
 def _gather_output(counts,
@@ -108,13 +110,7 @@ def wc(files,
     total_words       = 0
     total_line_length = 0
 
-    for fname in files:
-        if isinstance(fname, str):
-            fp = open(fname, "rb")
-            atexit.register(fp.close)
-        else:
-            fp = fname
-
+    for fp in files:
         current_stats = _examine_fp(fp)
         yield _gather_output(current_stats,
                              lines,

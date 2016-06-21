@@ -35,11 +35,3 @@ this
 that
 the other
 """
-
-def make_file_for_grep_tests(root=".", test_data=_test_data):
-    filename = os.path.join(root, "test-file.{}.txt".format(uuid()))
-    with open(filename, "w") as fp:
-        fp.write(test_data)
-        fp.flush()
-        os.fsync(fp.fileno())
-    return filename
