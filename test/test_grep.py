@@ -163,3 +163,11 @@ Of course that is a contrived example, but you get the idea.
             color=True
         ))
         self.assertIn(expected, results)
+
+    def test_case_insensitive_search(self):
+        expected = [
+            "line 1",
+            "Line 1"
+        ]
+        results = list(unitils.grep(r"line 1", test_data, ignore_case=True))
+        self.assertEqual(sorted(expected), sorted(results))
