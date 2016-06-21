@@ -107,6 +107,8 @@ What is the current list of utilities provided by unitils?
 What is on the list to be done?
 -------------------------------
 
+__In no particular order__
+
 * ls
 * ll
 * cat
@@ -117,6 +119,10 @@ What is on the list to be done?
 * ssh
 * make
 * watch
+* awk
+* sed
+* file
+* strings
 
 ---------------
 How can I help?
