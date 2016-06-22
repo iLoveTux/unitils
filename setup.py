@@ -11,7 +11,7 @@ setup(
     url="http://github.com/ilovetux/unitils",
     packages=['unitils'],
     install_requires=[
-        "lxml", "colorama",
+        "lxml", "colorama", "mock"
     ],
     entry_points={
         "console_scripts": [

@@ -1,10 +1,17 @@
 import os
 import re
-from io import StringIO
-from time import sleep
+import sys
 import unitils
 import unittest
 import colorama
+from time import sleep
+from unitils import cli
+from io import StringIO
+try:
+    from unittest import mock
+except ImportError:
+    import mock
+
 
 def magenta(text):
     return "{}{}{}".format(
@@ -27,6 +34,33 @@ def red(text):
         colorama.Fore.RESET
     )
 
+return_value = (
+    "this",
+    "that",
+    "the other"
+)
+class TestGrepCLI(unittest.TestCase):
+
+    @mock.patch("unitils.grep", return_value=return_value)
+    def test_expr_needs_to_be_there(self, mock_grep):
+        args = []
+        with self.assertRaises(SystemExit):
+            unitils.cli.grep(args)
+
+    @mock.patch("unitils.grep", return_value=return_value)
+    def test_files_defaults_to_stdin(self, mock_grep):
+        args = ["*"]
+        unitils.cli.grep(args)
+        mock_grep.assert_called_with(
+            expr="*",
+            files=[sys.stdin],
+            line_numbers=False,
+            filenames=False,
+            color=True,
+            invert_match=False,
+            ignore_case=False
+        )
+
 test_data = (
     u"line 1",
     u"1 line",
@@ -36,7 +70,6 @@ test_data = (
     u"that",
     u"the other"
 )
-
 class TestGrep(unittest.TestCase):
 
     def test_grep_will_find_lines(self):
@@ -47,6 +80,17 @@ class TestGrep(unittest.TestCase):
             "1 Line",
         ]
         results = list(unitils.grep(r"^\d+.*", test_data))
+        self.assertEqual(results, expected)
+
+    def test_grep_will_find_lines_with_compiled_regex(self):
+        """given regex as compiled regular expression, grep should find
+        all occurances within file
+        """
+        expected = [
+            "1 line",
+            "1 Line",
+        ]
+        results = list(unitils.grep(re.compile(r"^\d+.*"), test_data))
         self.assertEqual(results, expected)
 
     def test_line_numbers(self):
@@ -145,6 +189,7 @@ class TestGrep(unittest.TestCase):
             red(r"\g<0>"),
             """    for line in grep(r"\d+:\s\w+", "/path/to/file"):\n""",
         )
+        expected = "{}: {}".format(magenta("test.dat"), expected)
         content = u"""In addition to the command line utilities, you will also have a Python library which
 contains the same functionality. I have routinely found it useful to be able to
 use functions like this in Python source::
@@ -157,10 +202,12 @@ use functions like this in Python source::
 Of course that is a contrived example, but you get the idea.
 """
         fp = StringIO(content)
+        fp.name = "test.dat"
         results = list(unitils.grep(
             r"\w",
             fp,
-            color=True
+            color=True,
+            filenames=True
         ))
         self.assertIn(expected, results)
 

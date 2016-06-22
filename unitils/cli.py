@@ -4,6 +4,84 @@ import unitils
 import argparse
 import colorama; colorama.init()
 
+def wc(argv):
+    argv = sys.argv[1:] if argv is None else argv
+    parser = argparse.ArgumentParser(
+        prog="wc.py",
+        description="A Simplified wc-like utility",
+        epilog="Copyright 2016 iLoveTux - all rights reserved"
+    )
+    parser.add_argument(
+        "files", nargs="*", default=[sys.stdin],
+        help="A list of files to inspect"
+    )
+    parser.add_argument(
+        "--bytes", "-c", action="store_true",
+        help="Print the bytes count"
+    )
+    parser.add_argument(
+        "--chars", "-m", action="store_true",
+        help="Print the characters count"
+    )
+    parser.add_argument(
+        "--lines", "-l", action="store_true",
+        help="Print the newline count"
+    )
+    parser.add_argument(
+        "--max-line-length", "-L", action="store_true",
+        help="Print the bytes count"
+    )
+    parser.add_argument(
+        "--words", "-w", action="store_true",
+        help="Print the word count"
+    )
+    args = parser.parse_args(argv)
+    kwargs = {
+        "files": args.files,
+        "lines": args.lines,
+        "byte_count": args.bytes,
+        "chars": args.chars,
+        "words": args.words,
+        "max_line_length": args.max_line_length
+    }
+    for result in unitils.wc(**kwargs):
+        print(result)
+
+
+def find(argv=None):
+    argv = sys.argv[1:] if argv is None else argv
+    parser = argparse.ArgumentParser(
+        prog="find.py",
+        description="A Simplified find-like utility",
+        epilog="Copyright 2016 iLoveTux - all rights reserved"
+    )
+    parser.add_argument(
+        "path", nargs="?", default=".",
+        help="The path to search, defaults to current directory"
+    )
+    parser.add_argument(
+        "-iname", nargs="?", default=None,
+        help="The case-insensitive name spec (glob pattern) to search for"
+    )
+    parser.add_argument(
+        "-name", nargs="?", default=None,
+        help="The case-sensitive name spec (glob pattern) to search for"
+    )
+    parser.add_argument(
+        "-type", nargs="?", default="*",
+        choices=("b", "c", "d", "p", "f", "l", "s"),
+        help="The file type to search for [bcdpfls]"
+    )
+    args = parser.parse_args(argv)
+    kwargs = {
+        "path": args.path,
+        "iname": args.iname,
+        "name": args.name,
+        "ftype": args.type
+    }
+    for result in unitils.find(**kwargs):
+        print(result)
+
 def grep(argv=None):
     """search for patterns of text in a set of files.
 
@@ -35,6 +113,10 @@ def grep(argv=None):
              "when 'never' no color will be added."
     )
     parser.add_argument(
+        "--ignore-case", "-i", action="store_true",
+        help="If specified, lines will be matched without regard to case"
+    )
+    parser.add_argument(
         "expr",
         help="The regular expression for which to search"
     )
@@ -49,6 +131,7 @@ def grep(argv=None):
         "line_numbers": args.line_number,
         "filenames": args.with_filename,
         "invert_match": args.invert_match,
+        "ignore_case": args.ignore_case,
         "color": args.color == "auto"
     }
     for line in unitils.grep(**kwargs):
