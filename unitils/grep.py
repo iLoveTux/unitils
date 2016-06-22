@@ -18,12 +18,21 @@ def red(text):
     """
     return "{}{}{}".format(colorama.Fore.RED, text, colorama.Fore.RESET)
 
+def build_regex(pattern, ignore_case):
+    flags = re.IGNORECASE if ignore_case else 0
+    try:
+        return re.compile(pattern, flags=flags)
+    except ValueError:
+        # Might already be a compiled regular expression
+        return re.compile(pattern.pattern, flags=flags)
+
 def grep(expr,
          files,
          line_numbers=False,
          filenames=False,
          color=False,
-         invert_match=False):
+         invert_match=False,
+         ignore_case=False):
     """search the contents of files for expr, yield the results
 
     files can be a filename as str, a list of filenames, a file-like
@@ -50,7 +59,7 @@ def grep(expr,
     :type expr: str, compiled regex
     :type files: str, list, file
     """
-    expr = re.compile(expr) if isinstance(expr, str) else expr
+    expr = build_regex(expr, ignore_case)
     files = files if isinstance(files, list) else [files]
     for fp in files:
         for line_number, line in enumerate(fp, start=1):
@@ -64,5 +73,4 @@ def grep(expr,
                     line = "{}: {}".format(magenta(fp.name) if color else fp.name, line)
                 else:
                     line = "{}: {}".format(magenta("<stdin>") if color else "<stdin>", line)
-
             yield line
