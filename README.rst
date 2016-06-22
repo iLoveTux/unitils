@@ -93,7 +93,17 @@ In general, the master branch is what is available on PyPI.
 What is this compatible with?
 -----------------------------
 
-Unitils is tested with Python 3.5.1, but may work on other versions as well. Besides the version of Python, unitils should work on all platforms on which Python runs.
+Unitils is tested and confirmed to work with
+
+* Python 3.5
+* Python 3.4
+* Python 3.3
+* Python 2.7
+* pypy
+
+Unitils should work on all platforms on which Python runs.
+
+Note: While it is supported, I cannot run the unittests in Python 3.5 on Windows because there is no wheel for lxml on PyPI for Python 3.5. I am able to test all the other versions of Python on Windows and I am able to test all versions on Linux, so unless there is a bug in Python which affects Python 3.5 on Windows we should be fine.
 
 ----------------------------------------------------------
 What is the current list of utilities provided by unitils?
@@ -107,7 +117,7 @@ What is the current list of utilities provided by unitils?
 What is on the list to be done?
 -------------------------------
 
-__In no particular order__
+**In no particular order**
 
 * ls
 * ll
