@@ -4,6 +4,32 @@ import unitils
 import argparse
 import colorama; colorama.init()
 
+def cat(argv, output_stream=sys.stdout):
+    argv = sys.argv[1:] if argv is None else argv
+    parser = argparse.ArgumentParser(
+        prog="wc.py",
+        description="A Simplified wc-like utility",
+        epilog="Copyright 2016 iLoveTux - all rights reserved"
+    )
+    parser.add_argument(
+        "files", nargs="*", default=[sys.stdin], type=argparse.FileType("rb"),
+        help="A list of files to inspect"
+    )
+    parser.add_argument(
+        "--number", "-n", action="store_true",
+        help="number all output lines"
+    )
+    args = parser.parse_args(argv)
+    kwargs = {
+        "files": args.files,
+        "number": args.number
+    }
+    for line in unitils.cat(**kwargs):
+        if isinstance(line, tuple):
+            output_stream.write("\t{}  {}".format(*line))
+        else:
+            output_stream.write(line)
+
 def wc(argv):
     argv = sys.argv[1:] if argv is None else argv
     parser = argparse.ArgumentParser(

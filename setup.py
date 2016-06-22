@@ -18,6 +18,7 @@ setup(
             "grep.py=unitils.cli:grep",
             "find.py=unitils.cli:find",
             "wc.py=unitils.cli:wc",
+            "cat.py=unitils.cli:cat",
         ]
     },
     test_suite='nose.collector',
