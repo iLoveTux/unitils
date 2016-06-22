@@ -4,7 +4,63 @@ import os
 import shutil
 import unitils
 import unittest
+from unitils import cli
+try:
+    from unittest import mock
+except ImportError:
+    import mock
 
+
+return_value = (
+    "/var/log/this.log",
+    "/var/log/that.log",
+    "/var/log/the-other.log",
+)
+class TestFindCLI(unittest.TestCase):
+
+    @mock.patch("unitils.find", return_value=return_value)
+    def test_type_argument(self, mock_find):
+        args = ["-type", "f"]
+        unitils.cli.find(args)
+        mock_find.assert_called_with(
+            path=".",
+            name=None,
+            iname=None,
+            ftype="f"
+        )
+
+    @mock.patch("unitils.find", return_value=return_value)
+    def test_name_argument(self, mock_find):
+        args = ["-name", "*.log"]
+        unitils.cli.find(args)
+        mock_find.assert_called_with(
+            path=".",
+            name="*.log",
+            iname=None,
+            ftype="*"
+        )
+
+    @mock.patch("unitils.find", return_value=return_value)
+    def test_will_run_without_arguments(self, mock_find):
+        args = []
+        unitils.cli.find(args)
+        mock_find.assert_called_with(
+            path=".",
+            name=None,
+            iname=None,
+            ftype="*"
+        )
+
+    @mock.patch("unitils.find", return_value=return_value)
+    def test_path_is_overridden_by_arguments(self, mock_find):
+        args = ["/var/log", "-iname", "*.log"]
+        unitils.cli.find(args)
+        mock_find.assert_called_with(
+            path="/var/log",
+            name=None,
+            iname="*.log",
+            ftype="*"
+        )
 
 class TestFind(unittest.TestCase):
     """Generic tests for unitils.find

@@ -1,12 +1,32 @@
-from io import StringIO
 import os
+import sys
 import unittest
 import unitils
+from unitils import cli
+from io import StringIO
+try:
+    from unittest import mock
+except ImportError:
+    import mock
+
+class TestWcCLI(unittest.TestCase):
+
+    @mock.patch("unitils.wc", return_value=((10, 20, 30, "<stdin>"), ))
+    def test_files_defaults_to_stdin(self, mock_wc):
+        args = []
+        unitils.cli.wc(args)
+        mock_wc.assert_called_with(
+            files=[sys.stdin],
+            lines=False,
+            byte_count=False,
+            chars=False,
+            words=False,
+            max_line_length=False
+        )
 
 test_data = u"""This is a test
 this is only a test
 """
-
 class TestWC(unittest.TestCase):
     """General tests for wc
     """

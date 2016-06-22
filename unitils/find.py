@@ -4,7 +4,7 @@ import re
 import os
 
 
-def find(path=".", name=None, iname=None, ftype="*", expr=""):
+def find(path=".", name=None, iname=None, ftype="*"):
     """Search for files in a directory heirarchy.
     """
     if ftype not in "bcdpfls*" or len(ftype) != 1:
