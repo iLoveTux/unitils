@@ -16,7 +16,8 @@ setup(
     entry_points={
         "console_scripts": [
             "grep.py=unitils.cli:grep",
-            "cat.py=unitils.cli:cat"
+            "find.py=unitils.cli:find",
+            "wc.py=unitils.cli:wc",
         ]
     },
     test_suite='nose.collector',
