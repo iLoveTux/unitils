@@ -21,6 +21,12 @@ class TestCatCLI(unittest.TestCase):
         with self.assertRaises(SystemExit):
             cli.cat(args)
 
+    @mock.patch("unitils.cat", return_value=((1, "this"), (2, "that"), (3, "the other")))
+    def test_cat_accepts_accepts_number(self, mock_cat):
+        args = ["-n"]
+        cli.cat(args)
+        mock_cat.assert_called_with(files=[sys.stdin], number=True)
+
 data = (
     ("This", "That", "The other"),
     ("This", "That", "The other"),
