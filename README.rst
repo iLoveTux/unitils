@@ -111,6 +111,7 @@ What is the current list of utilities provided by unitils?
 
 * find
 * grep
+* cat
 * wc
 
 -------------------------------
@@ -121,7 +122,6 @@ What is on the list to be done?
 
 * ls
 * ll
-* cat
 * top
 * wget
 * zip / unzip
