@@ -4,7 +4,35 @@ import unitils
 import argparse
 import colorama; colorama.init()
 
-def cat(argv, output_stream=sys.stdout):
+def ls(argv=None, out=sys.stdout, err=sys.stderr):
+    argv = sys.argv[1:] if argv is None else argv
+    parser = argparse.ArgumentParser(
+        prog="wc.py",
+        description="A Simplified ls-like utility",
+        epilog="Copyright 2016 iLoveTux - all rights reserved"
+    )
+    parser.add_argument(
+        "path", nargs="?", default=".",
+        help="list information about path (defaults to current directory)"
+    )
+    parser.add_argument(
+        "--all", "-a", action="store_true",
+        help="If specified, do not ignore 'dot files'"
+    )
+    parser.add_argument(
+        "--almost-all", "-A", action="store_true",
+        help="Do not list '.' and '..'"
+    )
+    args = parser.parse_args(argv)
+    kwargs = {
+        "path": args.path,
+        "_all": args.all,
+        "almost_all": args.almost_all
+    }
+    for item in unitils.ls(**kwargs):
+        out.write(item + "\n")
+
+def cat(argv=None, out=sys.stdout, err=sys.stderr):
     argv = sys.argv[1:] if argv is None else argv
     parser = argparse.ArgumentParser(
         prog="wc.py",
@@ -26,11 +54,11 @@ def cat(argv, output_stream=sys.stdout):
     }
     for line in unitils.cat(**kwargs):
         if isinstance(line, tuple):
-            output_stream.write("\t{}  {}".format(*line))
+            out.write("\t{}  {}".format(*line))
         else:
-            output_stream.write(line)
+            out.write(line)
 
-def wc(argv):
+def wc(argv=None, out=sys.stdout, err=sys.stderr):
     argv = sys.argv[1:] if argv is None else argv
     parser = argparse.ArgumentParser(
         prog="wc.py",
@@ -38,7 +66,7 @@ def wc(argv):
         epilog="Copyright 2016 iLoveTux - all rights reserved"
     )
     parser.add_argument(
-        "files", nargs="*", default=[sys.stdin],
+        "files", nargs="*", default=[sys.stdin], type=argparse.FileType("r"),
         help="A list of files to inspect"
     )
     parser.add_argument(
@@ -71,10 +99,10 @@ def wc(argv):
         "max_line_length": args.max_line_length
     }
     for result in unitils.wc(**kwargs):
-        print(result)
+        out.write("  ".join((str(x) for x in result))+"\n")
 
 
-def find(argv=None):
+def find(argv=None, out=sys.stdout, err=sys.stderr):
     argv = sys.argv[1:] if argv is None else argv
     parser = argparse.ArgumentParser(
         prog="find.py",
@@ -106,9 +134,9 @@ def find(argv=None):
         "ftype": args.type
     }
     for result in unitils.find(**kwargs):
-        print(result)
+        out.write(result)
 
-def grep(argv=None):
+def grep(argv=None, out=sys.stdout, err=sys.stderr):
     """search for patterns of text in a set of files.
 
     :param argv: The list of args to be parsed as options (defaults to sys.argv[1:])
@@ -161,4 +189,4 @@ def grep(argv=None):
         "color": args.color == "auto"
     }
     for line in unitils.grep(**kwargs):
-        print(line.rstrip())
+        out.write(line.rstrip())
