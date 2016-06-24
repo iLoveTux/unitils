@@ -1,4 +1,9 @@
+import sys
 from setuptools import setup
+
+tests_require = ["nose"]
+if sys.version_info < (3,0):
+    tests_require = ["nose", "mock"]
 
 setup(
     name="unitils",
@@ -11,7 +16,7 @@ setup(
     url="http://github.com/ilovetux/unitils",
     packages=['unitils'],
     install_requires=[
-        "lxml", "colorama", "mock"
+        "lxml", "colorama", "blessings"
     ],
     entry_points={
         "console_scripts": [
@@ -19,10 +24,11 @@ setup(
             "find.py=unitils.cli:find",
             "wc.py=unitils.cli:wc",
             "cat.py=unitils.cli:cat",
+            "ls.py=unitils.cli:ls",
         ]
     },
-    test_suite='nose.collector',
-    tests_require=['nose'],
+    test_suite="nose.collector",
+    tests_require=tests_require,
     classifiers=[
         "Development Status :: 4 - Beta",
         "Topic :: Utilities",
