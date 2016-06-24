@@ -1,0 +1,10 @@
+.jumbotron {
+    background: #000 url("../images/jumbotron-background.svg") no-repeat;
+    background-size: 100% 100%;
+    max-width: 100%;
+    -moz-background-size: 100% 100%;
+    -webkit-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    color: #000000; // change text color
+}
+
