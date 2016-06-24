@@ -1,4 +1,9 @@
+import sys
 from setuptools import setup
+
+tests_require = ["nose"]
+if sys.version_info < (3,0):
+    tests_require = ["nose", "mock"]
 
 setup(
     name="unitils",
@@ -23,7 +28,7 @@ setup(
         ]
     },
     test_suite="nose.collector",
-    tests_require=["nose", "mock"],
+    tests_require=tests_require,
     classifiers=[
         "Development Status :: 4 - Beta",
         "Topic :: Utilities",
