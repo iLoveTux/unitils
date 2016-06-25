@@ -12,4 +12,6 @@ Unitils
    :maxdepth: 2
 
    readme
+   rationale
+   cli
    api
