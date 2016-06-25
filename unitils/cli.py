@@ -2,12 +2,51 @@ from __future__ import print_function
 import sys
 import unitils
 import argparse
+from time import time, ctime
 import colorama; colorama.init()
+import blessings
+
+def watch(argv=None, out=sys.stdout, err=sys.stderr):
+    argv = sys.argv[1:] if argv is None else argv
+    parser = argparse.ArgumentParser(
+        prog="watch.py",
+        description="A Simplified watch-like utility",
+        epilog="Copyright 2016 iLoveTux - all rights reserved"
+    )
+    parser.add_argument(
+        "command",
+        help="command to monitor"
+    )
+    parser.add_argument(
+        "--interval", "-n", type=int, default=2,
+        help="seconds to wait between updates"
+    )
+    args = parser.parse_args(argv)
+    kwargs = {
+        "command": args.command,
+        "interval": args.interval
+    }
+    terminal = blessings.Terminal(stream=out)
+    try:
+        for out, err, rc in unitils.watch(**kwargs):
+            with terminal.fullscreen(), terminal.hidden_cursor():
+                msg = "every {} seconds: {}".format(args.interval, args.command)
+                timestamp = ctime(time())
+                header = "{}{}{}".format(
+                    msg,
+                    " " * (terminal.width-(len(msg)+len(timestamp))),
+                    timestamp
+                )
+                with terminal.location(0, 0):
+                    print(header, end="\n\n")
+                    print(out.decode("utf-8"))
+    except KeyboardInterrupt:
+        pass
 
 def ls(argv=None, out=sys.stdout, err=sys.stderr):
     argv = sys.argv[1:] if argv is None else argv
     parser = argparse.ArgumentParser(
-        prog="wc.py",
+        prog="ls.py",
         description="A Simplified ls-like utility",
         epilog="Copyright 2016 iLoveTux - all rights reserved"
     )
@@ -35,8 +74,8 @@ def ls(argv=None, out=sys.stdout, err=sys.stderr):
 def cat(argv=None, out=sys.stdout, err=sys.stderr):
     argv = sys.argv[1:] if argv is None else argv
     parser = argparse.ArgumentParser(
-        prog="wc.py",
-        description="A Simplified wc-like utility",
+        prog="cat.py",
+        description="A Simplified cat-like utility",
         epilog="Copyright 2016 iLoveTux - all rights reserved"
     )
     parser.add_argument(
