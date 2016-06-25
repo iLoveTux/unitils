@@ -54,79 +54,100 @@
 
       <!-- Jumbotron -->
       <div class="jumbotron">
-        <h1>Unitils</h1>
-        <p class="lead">Don't be a shell out.</p>
-        <p><a class="btn btn-lg btn-success" href="./downloads.html" role="button">Downloads</a></p>
+        <div class="container">
+            <h1 class="text-left emboss"><strong>Unitils</strong></h1>
+            <p class="lead text-left overline"><strong>Don't be a shell out.</strong></p>
+            <p class="text-left"><a class="btn btn-lg btn-primary" href="./downloads.html" role="button">Downloads</a></p>
+        </div>
       </div>
 
       <!-- Example row of columns -->
       <div class="row">
         <div class="col-lg-4">
-          <h2>CLI utilities</h2>
-          <p>Currently implemented</p>
-          <ul>
-            <li>grep.py</li>
-            <li>find.py</li>
-            <li>wc.py</li>
-            <li>ls.py</li>
-            <li>cat.py</li>
-          </ul>
-          <p>Planned for implementation</p>
-          <ul>
-            <li>ll.py</li>
-            <li>top.py</li>
-            <li>wget.py</li>
-            <li>zip.py</li> 
-            <li>unzip.py</li>
-            <li>curl.py</li>
-            <li>ssh.py</li>
-            <li>make.py</li>
-            <li>watch.py</li>
-            <li>awk.py</li>
-            <li>sed.py</li>
-            <li>file.py</li>
-            <li>strings.py</li>
-          </ul>
+            <h2>Familiar</h2><hr class="dark-hr"/>
+            <h4><span class="glyphicon glyphicon-ok"></span> Simulates well-known utilities</h4>
+            <h4><span class="glyphicon glyphicon-ok"></span> Provides CLI clones (mostly)</h4>
         </div>
         <div class="col-lg-4">
-          <h2>Python API</h2>
-          <p>Currently implemented</p>
+            <h2>Efficient</h2><hr class="dark-hr"/>
+            <h4><span class="glyphicon glyphicon-ok"></span> No Shelling Out</h4>
+            <h4><span class="glyphicon glyphicon-ok"></span> Profiled on every build</h4>
+            <h4><span class="glyphicon glyphicon-ok"></span> Uses iterators whenever possible</h4>
+        </div>
+        <div class="col-lg-4">
+            <h2>Versatile</h2><hr class="dark-hr"/>
+            <h4><span class="glyphicon glyphicon-ok"></span> Windows</h4>
+            <h4><span class="glyphicon glyphicon-ok"></span> Linux</h4>
+            <h4><span class="glyphicon glyphicon-ok"></span> Python</h4>
+            <ul>
+                <h5><span class="glyphicon glyphicon-ok"></span> 2.7</h5>
+                <h5><span class="glyphicon glyphicon-ok"></span> 3.3</h5>
+                <h5><span class="glyphicon glyphicon-ok"></span> 3.4</h5>
+                <h5><span class="glyphicon glyphicon-ok"></span> 3.5</h5>
+                <h5><span class="glyphicon glyphicon-ok"></span> pypy</h5>
+            </ul>            
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4">
+          <h2>Stable</h2><hr class="dark-hr">
+            <h4><span class="glyphicon glyphicon-ok"></span> Continuous Integration</h4>
+            <h4><span class="glyphicon glyphicon-ok"></span> At or Near 100% test coverage</h4>
+        </div>
+        <div class="col-lg-4">
+          <h2>Python API</h2><hr class="dark-hr">
+          <h3>Currently</h3>
           <ul>
-            <li>unitils.grep</li>
-            <li>unitils.find</li>
-            <li>unitils.wc</li>
-            <li>unitils.ls</li>
-            <li>unitils.cat</li>
+              <p><span class="glyphicon glyphicon-ok"></span> unitils.grep</p>
+              <p><span class="glyphicon glyphicon-ok"></span> unitils.find</p>
+              <p><span class="glyphicon glyphicon-ok"></span> unitils.wc</p>
+              <p><span class="glyphicon glyphicon-ok"></span> unitils.ls</p>
+              <p><span class="glyphicon glyphicon-ok"></span> unitils.cat</p>
           </ul>
-          <p>Planned for implementation</p>
+          <h3>Soon</h3>
           <ul>
-            <li>unitils.ll</li>
-            <li>unitils.top</li>
-            <li>unitils.wget</li>
-            <li>unitils.zip</li>
-            <li>unzip</li>
-            <li>unitils.curl</li>
-            <li>unitils.ssh</li>
-            <li>unitils.make</li>
-            <li>unitils.watch</li>
-            <li>unitils.awk</li>
-            <li>unitils.sed</li>
-            <li>unitils.file</li>
-            <li>unitils.strings</li>
+            <p><span class="glyphicon glyphicon-remove"></span> unitils.ll</p>
+            <p><span class="glyphicon glyphicon-remove"></span> unitils.top</p>
+            <p><span class="glyphicon glyphicon-remove"></span> unitils.wget</p>
+            <p><span class="glyphicon glyphicon-remove"></span> unitils.zip</p>
+            <p><span class="glyphicon glyphicon-remove"></span> unzip</p>
+            <p><span class="glyphicon glyphicon-remove"></span> unitils.curl</p>
+            <p><span class="glyphicon glyphicon-remove"></span> unitils.ssh</p>
+            <p><span class="glyphicon glyphicon-remove"></span> unitils.make</p>
+            <p><span class="glyphicon glyphicon-remove"></span> unitils.watch</p>
+            <p><span class="glyphicon glyphicon-remove"></span> unitils.awk</p>
+            <p><span class="glyphicon glyphicon-remove"></span> unitils.sed</p>
+            <p><span class="glyphicon glyphicon-remove"></span> unitils.file</p>
+            <p><span class="glyphicon glyphicon-remove"></span> unitils.strings</p>
           </ul>
        </div>
         <div class="col-lg-4">
-          <h2>Cross-Platform</h2>
-          <p>Tested to work on Linux and Windows with:</p>
+          <h2>CLI</h2><hr class="dark-hr">
+          <h3>Currently</h3>
           <ul>
-            <li>Python 2.7</li>
-            <li>Python 3.3</li>
-            <li>Python 3.4</li>
-            <li>Python 3.5</li>
-            <li>pypy</li>
+              <p><span class="glyphicon glyphicon-ok"></span> grep.py</p>
+              <p><span class="glyphicon glyphicon-ok"></span> find.py</p>
+              <p><span class="glyphicon glyphicon-ok"></span> wc.py</p>
+              <p><span class="glyphicon glyphicon-ok"></span> ls.py</p>
+              <p><span class="glyphicon glyphicon-ok"></span> cat.py</p>
           </ul>
-        </div>
-      </div>
+          <h3>Soon</h3>
+          <ul>
+            <p><span class="glyphicon glyphicon-remove"></span> ll.py</p>
+            <p><span class="glyphicon glyphicon-remove"></span> top.py</p>
+            <p><span class="glyphicon glyphicon-remove"></span> wget.py</p>
+            <p><span class="glyphicon glyphicon-remove"></span> zip.py</p>
+            <p><span class="glyphicon glyphicon-remove"></span> unzip.py</p>
+            <p><span class="glyphicon glyphicon-remove"></span> curl.py</p>
+            <p><span class="glyphicon glyphicon-remove"></span> ssh.py</p>
+            <p><span class="glyphicon glyphicon-remove"></span> make.py</p>
+            <p><span class="glyphicon glyphicon-remove"></span> watch.py</p>
+            <p><span class="glyphicon glyphicon-remove"></span> awk.py</p>
+            <p><span class="glyphicon glyphicon-remove"></span> sed.py</p>
+            <p><span class="glyphicon glyphicon-remove"></span> file.py</p>
+            <p><span class="glyphicon glyphicon-remove"></span> strings.py</p>
+          </ul>
+       </div>
 
       <!-- Site footer -->
       <footer class="footer">

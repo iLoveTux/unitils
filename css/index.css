@@ -8,3 +8,14 @@
     color: #000000; // change text color
 }
 
+.overline{
+    text-decoration: overline;
+}
+
+.emboss {
+    text-shadow: 1px 4px 4px #555;
+}
+
+.dark-hr {
+    border-color: #BBBBBB;
+}

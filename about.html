@@ -54,27 +54,86 @@
 
       <!-- Jumbotron -->
       <div class="jumbotron">
-        <h1>Unitils</h1>
-        <p class="lead">Don't be a shell out.</p>
-        <p><a class="btn btn-lg btn-success" href="./downloads.html" role="button">Downloads</a></p>
+        <div class="container">
+            <h1 class="text-left emboss"><strong>Unitils</strong></h1>
+            <p class="lead text-left overline"><strong>Don't be a shell out.</strong></p>
+            <p class="text-left"><a class="btn btn-lg btn-primary" href="./downloads.html" role="button">Downloads</a></p>
+        </div>
       </div>
 
       <!-- Example row of columns -->
       <div class="row">
         <div class="col-lg-4">
-          <h2>Who</h2>
-          <p>I am "iLoveTux" (or Clifford David Bressette IV in the real world), I work here and there but this project is my own. If you like what you see and would like to pay me to do something, you can shoot me an email at <a href="mailto:me@ilovetux.com">me@ilovetux.com</a></p>
+          <h2>Who</h2><hr class="dark-hr" />
+          <p>I am "iLoveTux" (or Cliff in the real world), I work here and
+          there but this project is my own. If you like what you see and
+          would like to pay me to do something, you can shoot me an email
+          at <a href="mailto:me@ilovetux.com">me@ilovetux.com</a></p>
+          <h3>Skills</h3>
+          <ul>
+            <li>Python</li>
+            <li>Node.js</li>
+            <li>Bash/Ksh</li>
+            <li>XML/XSLT/WSDL/XSD/XPATH</li>
+            <li>Java</li>
+            <li>Continuous Integration/Delivery/Deployment</li>
+            <li>
+                Full-Stack Development
+                <ul>
+                    <li>Design</li>
+                    <li>HTML/CSS/JS</li>
+                    <li>JQuery</li>
+                    <li>Bootstrap 3</li>
+                    <li>SQL/NoSQL</li>
+                    <li>Django</li>
+                    <li>Flask/Bottle</li>
+                    <li>CGI/FastCGI</li>
+                </ul>
+            </li>
+          </ul>
         </div>
         <div class="col-lg-4">
-          <h2>What</h2>
-          <p>These are simplified clones of some common *nix utilities with both a Python API and a CLI.</p>
+          <h2>What</h2><hr class="dark-hr" />
+          <p>These are simplified clones of some common *nix utilities with 
+          both a Python API and a CLI.</p>
+          <p>With this approach we create fast, efficient and native utilities
+          to use from within Python without needing to shell out or parse
+          the output.</p>
        </div>
         <div class="col-lg-4">
-          <h2>Why</h2>
-          <p>By re-writing utilities in Python, I am able to create efficient iterators which can be used in Python natively without "shelling out". Remember I did this because I didn't want to be a "shell out".</p>
+          <h2>How</h2><hr class="dark-hr" />
+          <p>This project follows a simple architecture. Python iterators are
+          created which accept the same parameters as some very useful utilities.
+          We then use Python's argparse module to wrap a CLI onto this iterator
+          at which point we also tailor the output from native Python types to
+          familiar console output.</p>
+          <p>We had also considered wraping a REST API or Web GUI around these
+          things, but we feel that they would be better served as building blocks
+          for many different types of Web Apps/APIs.</p>
+          
         </div>
       </div>
-
+      <div class="row">
+        <div class="col-lg-12">
+            <h2>Rationale</h2><hr class="dark-hr" />
+            <p>This project started with a small group of co-workers deciding
+            that they needed something to help them day-to-day. We all loved
+            shell scripts because they are concise and powerful. Readability
+            of shell scripts, however, erodes over time.</p>
+            <p>We decided that since the utilities had stood the test of 
+            time due to their dynamic, well-planned nature were not in 
+            need of a re-design, but rather they only lacked in their
+            portability.</p>
+            <p>By using Python, we were not only able to run our utilities
+            on many different platforms. We were able to use our utilities
+            right from within Python. In this way we were able to achieve
+            more concise Python code natively, without shelling out.</p>
+            <p>At the beginning, we had built a number of utilities, but had
+            not packaged them nor had we bothered with unittests, Continuous
+            Integration or comprehensive documentation. This project is my
+            attempt to fix that.</p>
+        </div>      
+      </div>  
       <!-- Site footer -->
       <footer class="footer">
         <p>&copy; 2016 iLoveTux - All Rights Reserved</p>
