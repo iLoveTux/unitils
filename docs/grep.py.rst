@@ -33,6 +33,7 @@ Generic Program Information
 ---------------------------
 
 .. code::
+
     --help
         Output a usage message and exits.
     -V, --version
@@ -42,6 +43,7 @@ Matching Control
 -----------------
 
 .. code::
+
     -i, --ignore-case
         Ignore case distinctions in both the PATTERN and the input files.
     -v, --invert-match
@@ -51,6 +53,7 @@ General Output Control
 ----------------------
 
 .. code::
+
     --color[=WHEN]
         WHEN can be "never", "always" or "auto".  On *nix systems, ANSI escape
         sequences are used to achieve terminal coloring. On Windows systems,
@@ -62,6 +65,7 @@ Output Line Prefix Control
 --------------------------
 
 .. code::
+
     -H, --with-filename
         Print the filename for each match.
     -n, --line-number
