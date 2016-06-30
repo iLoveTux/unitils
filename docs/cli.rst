@@ -2,6 +2,9 @@
 CLI
 ***
 
+.. toctree::
+
+    grep.py
 
 Here, I will outline the various cli utilities included with unitils, for now this is a placeholder. I will get to this soon.
 
