@@ -4,7 +4,7 @@ import unitils
 import argparse
 from time import time, ctime
 import colorama; colorama.init()
-import blessings
+
 
 def watch(argv=None, out=sys.stdout, err=sys.stderr):
     argv = sys.argv[1:] if argv is None else argv
@@ -26,20 +26,19 @@ def watch(argv=None, out=sys.stdout, err=sys.stderr):
         "command": args.command,
         "interval": args.interval
     }
-    terminal = blessings.Terminal(stream=out)
+    terminal_width = unitils.get_terminal_size()[0]
     try:
         for out, err, rc in unitils.watch(**kwargs):
-            with terminal.fullscreen(), terminal.hidden_cursor():
-                msg = "every {} seconds: {}".format(args.interval, args.command)
-                timestamp = ctime(time())
-                header = "{}{}{}".format(
-                    msg,
-                    " " * (terminal.width-(len(msg)+len(timestamp))),
-                    timestamp
-                )
-                with terminal.location(0, 0):
-                    print(header, end="\n\n")
-                    print(out.decode("utf-8"))
+            msg = "every {} seconds: {}".format(args.interval, args.command)
+            timestamp = ctime(time())
+            header = "{}{}{}".format(
+                msg,
+                " " * (terminal_width-(len(msg)+len(timestamp))),
+                timestamp
+            )
+            clear()
+            print(header, end="\n\n")
+            print(out.decode("utf-8"))
     except KeyboardInterrupt:
         pass
 
