@@ -10,6 +10,7 @@ SYNOPSIS
 ========
 
 .. code:: bash
+
    grep.py [OPTIONS] PATTERN [FILE...]
 
 DESCRIPTION
