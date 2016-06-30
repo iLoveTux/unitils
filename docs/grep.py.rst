@@ -108,7 +108,7 @@ BUGS
 ====
 
 Bugs can be reported in our
-`issue tracker <https://github.com/ilovetux/unitils>`_. This is also the
+`issue tracker <https://github.com/ilovetux/unitils/issues>`_. This is also the
 correct place for feature requests.
 
 SEE ALSO
