@@ -4,22 +4,18 @@ Introduction
 
 .. image:: https://travis-ci.org/iLoveTux/unitils.svg?branch=master
     :alt: Travis-CI Build Status (for Linux)
-    :scale: 100%
     :target: https://travis-ci.org/iLoveTux/unitils
 
 .. image:: https://ci.appveyor.com/api/projects/status/i8jnjgjojbr0scov?svg=true
     :alt: AppVeyor Build Status (for windows)
-    :scale: 100%
     :target: https://ci.appveyor.com/project/iLoveTux/unitils
 
 .. image:: https://codecov.io/gh/iLoveTux/unitils/branch/master/graph/badge.svg
     :alt: Test Coverage Status
-    :scale: 100%
     :target: https://codecov.io/gh/iLoveTux/unitils
 
 .. image:: https://readthedocs.org/projects/docs/badge/?version=latest
     :alt: Documentation Status
-    :scale: 100%
     :target: http://unitils.readthedocs.io/en/latest/index.html
 
 -----------------------------
