@@ -1,8 +1,12 @@
+"""Various utility functions for use with command line programs.
+"""
 import os
 import functools
 import subprocess
 
 clear = functools.partial(os.system, 'cls' if os.name == 'nt' else 'clear')
+clear.__doc__ = """Clear the terminal. uses "cls" on Windows and "clear
+on *nix systems."""
 
 def system_call(
         command,
@@ -10,11 +14,11 @@ def system_call(
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         shell=False):
-    """
-    # system_call
-
-    helper function to shell out commands. This should be platform
+    """Helper function to shell out commands. This should be platform
     agnostic.
+
+    Arguments are the same as to subprocess.Popen. Returns (stdout, stderr,
+    returncode)
     """
     stderr = subprocess.STDOUT
     pipe = subprocess.Popen(
@@ -60,12 +64,13 @@ if sys.platform == 'win32':
             return (defaultx, defaulty)
 
     def get_keypress():
+        """Wait for a keypress and return key pressed. This is
+        the Windows version of this command"""
         import msvcrt
         return msvcrt.getch()
 else:
     def get_terminal_size(fd=1, defaultx=80, defaulty=25):
-        """
-        Returns height and width of current terminal. First tries to get
+        """Returns height and width of current terminal. First tries to get
         size via termios.TIOCGWINSZ, then from environment. Defaults to 25
         lines x 80 columns if both methods fail.
 
@@ -87,6 +92,8 @@ else:
         return wh
 
     def get_keypress():
+        """Wait for a keypress and return key pressed. This is
+        the *nix version of this command"""
         import termios, fcntl, sys, os
         fd = sys.stdin.fileno()
 
@@ -110,6 +117,12 @@ else:
         return c
 
 def page(text):
+    """Page through text on a terminal. Similar to more.
+
+    :param text: The text to page through
+    :type text: str
+    :returns: None
+    """
     if not sys.stdout.isatty():
         sys.stdout.write(text)
         sys.stdout.flush()
@@ -138,3 +151,4 @@ def page(text):
         else:
             print(line)
         current_line += 1
+
