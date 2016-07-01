@@ -14,7 +14,7 @@ def find(path=".", name=None, iname=None, ftype="*"):
     :param name: The name spec (glob pattern) to search for
     :param iname: The case-insensitive name spec (glob pattern) to search for
     :param ftype: The type of file to search for must be one of b, c, d, p, f, k, s or *
-    :param ftype: str
+    :type ftype: str
     :type iname: str
     :type name: str
     :type path: str
