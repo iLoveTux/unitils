@@ -15,9 +15,7 @@ setup(
     keywords="utility tools cli",
     url="http://github.com/ilovetux/unitils",
     packages=['unitils'],
-    install_requires=[
-        "lxml", "colorama", "blessings"
-    ],
+    install_requires=["colorama"],
     entry_points={
         "console_scripts": [
             "grep.py=unitils.cli:grep",
