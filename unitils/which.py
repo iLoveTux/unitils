@@ -1,7 +1,6 @@
 import os
 
 def which(cmd, _all=False):
-    print(os.environ["PATH"])
     PATH = os.environ["PATH"].split(os.pathsep)
     if _all:
         return (os.path.join(path, cmd) for path in PATH
@@ -10,5 +9,5 @@ def which(cmd, _all=False):
     else:
         for path in PATH:
             fname = os.path.join(path, cmd)
-            if os.path.exists(fname):
+            if os.path.exists(fname) and os.access(fname, os.X_OK):
                 return fname

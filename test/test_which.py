@@ -7,6 +7,24 @@ try:
 except ImportError:
     import mock
 
+
+return_value_not_all = "/usr/bin/ls"
+return_value_all = ["/usr/bin/ls", "/bin/ls"]
+class TestLsCLI(unittest.TestCase):
+
+    @mock.patch("unitils.which", return_value=return_value_not_all)
+    def test_can_be_called_with_just_cmd(self, mock_which):
+        args = ["ls"]
+        unitils.cli.which(argv=args)
+        mock_which.assert_called_with(cmd="ls", _all=False)
+
+    @mock.patch("unitils.which", return_value=return_value_all)
+    def test_accepts_dash_a(self, mock_which):
+        args = ["-a", "ls"]
+        unitils.cli.which(argv=args)
+        mock_which.assert_called_with(cmd="ls", _all=True)
+
+
 dummy_path = os.pathsep.join([
     "/usr/bin",
     "/bin",
@@ -41,7 +59,17 @@ class TestWhich(unittest.TestCase):
 
     @mock.patch("os.path.exists", return_value=True)
     @mock.patch("os.access", return_value=False)
-    def test_finds_all_executables(self, mock_exists, mock_access):
+    def test_finds_only_executable_files(self, mock_exists, mock_access):
+        """which should only match executable files
+        """
+        os.environ["PATH"] = dummy_path
+        results = unitils.which("ls", _all=False)
+        expected = None
+        self.assertEqual(expected, results)
+
+    @mock.patch("os.path.exists", return_value=True)
+    @mock.patch("os.access", return_value=False)
+    def test_finds_all_executable_files(self, mock_exists, mock_access):
         """which should only match executable files
         """
         os.environ["PATH"] = dummy_path

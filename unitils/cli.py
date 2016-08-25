@@ -6,6 +6,33 @@ from time import time, ctime
 import colorama; colorama.init()
 
 
+def which(argv=None, out=sys.stdout, err=sys.stderr):
+    argv = sys.argv[1:] if argv is None else argv
+    parser = argparse.ArgumentParser(
+        prog="which.py",
+        description="A Simplified which-like utility",
+        epilog="Copyright 2016 iLoveTux - all rights reserved"
+    )
+    parser.add_argument(
+        "cmd",
+        help="The executable for which to search PATH"
+    )
+    parser.add_argument(
+        "-a", "--all", action="store_true",
+        help="If specified, print all locations of cmd on PATH"
+    )
+    args = parser.parse_args(argv)
+    kwargs = {
+        "cmd": args.cmd,
+        "_all": args.all,
+    }
+    if not args.all:
+        out.write(unitils.which(**kwargs))
+    else:
+        for location in unitils.which(**kwargs):
+            out.write(location)
+
+
 def watch(argv=None, out=sys.stdout, err=sys.stderr):
     argv = sys.argv[1:] if argv is None else argv
     parser = argparse.ArgumentParser(

@@ -26,6 +26,7 @@ setup(
             "cat.py=unitils.cli:cat",
             "ls.py=unitils.cli:ls",
             "watch.py=unitils.cli:watch",
+            "which.py=unitils.cli:which",
         ]
     },
     test_suite="nose.collector",
