@@ -1,6 +1,22 @@
 import os
 import unittest
 import unitils
+import platform
+
+if "Windows" in platform.system():
+    return_value_not_all = "C:\\Program Files\\ls"
+    return_value_all = ["C:\\Program Files\\ls", "C:\\Program Files (x86)\\ls"]
+    dummy_path = os.pathsep.join([
+        "C:\\Program Files",
+        "C:\\Program Files (x86)",
+    ])
+else:
+    return_value_not_all = "/usr/bin/ls"
+    return_value_all = ["/usr/bin/ls", "/bin/ls"]
+    dummy_path = os.pathsep.join([
+        "/usr/bin",
+        "/bin",
+    ])
 
 try:
     from unittest import mock
@@ -8,8 +24,6 @@ except ImportError:
     import mock
 
 
-return_value_not_all = "/usr/bin/ls"
-return_value_all = ["/usr/bin/ls", "/bin/ls"]
 class TestLsCLI(unittest.TestCase):
 
     @mock.patch("unitils.which", return_value=return_value_not_all)
@@ -25,10 +39,6 @@ class TestLsCLI(unittest.TestCase):
         mock_which.assert_called_with(cmd="ls", _all=True)
 
 
-dummy_path = os.pathsep.join([
-    "/usr/bin",
-    "/bin",
-])
 class TestWhich(unittest.TestCase):
 
     # Based on this mock, which should always return
@@ -43,7 +53,7 @@ class TestWhich(unittest.TestCase):
         """
         os.environ["PATH"] = dummy_path
         results = unitils.which("ls")
-        expected = "/usr/bin/ls"
+        expected = return_value_not_all
         self.assertEqual(expected, results)
 
     @mock.patch("os.path.exists", return_value=True)
@@ -54,7 +64,7 @@ class TestWhich(unittest.TestCase):
         """
         os.environ["PATH"] = dummy_path
         results = list(unitils.which("ls", _all=True))
-        expected = ["/usr/bin/ls", "/bin/ls"]
+        expected = return_value_all
         self.assertEqual(expected, results)
 
     @mock.patch("os.path.exists", return_value=True)
