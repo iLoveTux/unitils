@@ -5,6 +5,32 @@ import argparse
 from time import time, ctime
 import colorama; colorama.init()
 
+def cp(argv=None, out=sys.stdout, err=sys.stderr):
+    argv = sys.argv[1:] if argv is None else argv
+    parser = argparse.ArgumentParser(
+        prog="cp.py",
+        description="A Simplified cp-like utility",
+        epilog="Copyright 2016 iLoveTux - all rights reserved"
+    )
+    parser.add_argument("-R", "--recursive",
+                        action="store_true",
+                        help="If specified, src will be copied "
+                             "recursively to dst")
+    parser.add_argument("-n", "--no-clobber",
+                        action="store_true",
+                        help="If specified, src will not be copied "
+                             "if it already exists")
+    parser.add_argument("src", help="file to copy")
+    parser.add_argument("dst", help="destination of copy")
+    args = parser.parse_args(argv)
+    kwargs = {
+        "src": args.src,
+        "dst": args.dst,
+        "recursive": args.recursive,
+        "no_clobber": args.no_clobber
+    }
+    unitils.cp(**kwargs)
+
 
 def which(argv=None, out=sys.stdout, err=sys.stderr):
     argv = sys.argv[1:] if argv is None else argv

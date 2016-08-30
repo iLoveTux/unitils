@@ -120,10 +120,13 @@ Note: While it is supported, I cannot run the unittests in Python 3.5 on Windows
 What is the current list of utilities provided by unitils?
 ----------------------------------------------------------
 
+* cat
 * find
 * grep
-* cat
+* ls
+* watch
 * wc
+* which
 
 -------------------------------
 What is on the list to be done?
@@ -131,19 +134,17 @@ What is on the list to be done?
 
 **In no particular order**
 
-* ls
 * ll
 * top
-* wget
 * zip / unzip
 * curl
 * ssh
 * make
-* watch
 * awk
 * sed
 * file
 * strings
+* wget
 
 ---------------
 How can I help?
