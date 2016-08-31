@@ -24,6 +24,7 @@ setup(
             "grep.py=unitils.cli:grep",
             "head.py=unitils.cli:head",
             "ls.py=unitils.cli:ls",
+            "pawn.py=unitils.cli:pawn",
             "watch.py=unitils.cli:watch",
             "wc.py=unitils.cli:wc",
             "which.py=unitils.cli:which",

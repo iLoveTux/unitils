@@ -4,6 +4,7 @@ from .head import head
 from .wc import wc
 from .cat import cat
 from .ls import ls
+from .pawn import pawn
 from .watch import watch
 from .which import which
 from .cp import cp
@@ -20,6 +21,7 @@ __all__ = [
     "cat",
     "cli",
     "ls",
+    "pawn",
     "util",
     "watch",
     "which",
