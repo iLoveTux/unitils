@@ -5,6 +5,38 @@ import argparse
 from time import time, ctime
 import colorama; colorama.init()
 
+def head(argv=None, out=sys.stdout, err=sys.stderr):
+    argv = sys.argv[1:] if argv is None else argv
+    parser = argparse.ArgumentParser(
+        prog="head.py",
+        description="A Simplified head-like utility",
+        epilog="Copyright 2016 iLoveTux - all rights reserved"
+    )
+    parser.add_argument("-n", "--lines", type=int, default=10,
+                        help="The number of lines to print")
+    parser.add_argument("-q", "--quiet", action="store_true",
+                        help="Do not print header with filename")
+    parser.add_argument("-v", "--verbose", action="store_true",
+                        help="Always print header with filename")
+    parser.add_argument("files", nargs=argparse.REMAINDER,
+                        help="The file(s) which to examine")
+    args = parser.parse_args(argv)
+    kwargs = {
+        "files": args.files,
+        "lines": args.lines,
+        "quiet": args.quiet,
+        "verbose": args.verbose
+    }
+    results = unitils.head(**kwargs)
+    if isinstance(results, dict):
+        for filename, lines in results.items():
+            out.write("==> {} <==\n".format(filename))
+            for line in lines:
+                out.write(line)
+    else:
+        for line in results:
+            out.write(line)
+
 def cp(argv=None, out=sys.stdout, err=sys.stderr):
     argv = sys.argv[1:] if argv is None else argv
     parser = argparse.ArgumentParser(

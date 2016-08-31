@@ -1,5 +1,6 @@
-from .grep import grep
 from .find import find
+from .grep import grep
+from .head import head
 from .wc import wc
 from .cat import cat
 from .ls import ls
@@ -12,8 +13,9 @@ from .util import (
 
 __all__ = [
     "cp",
-    "grep",
     "find",
+    "grep",
+    "head",
     "wc",
     "cat",
     "cli",

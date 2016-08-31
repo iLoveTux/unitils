@@ -18,12 +18,14 @@ setup(
     install_requires=["colorama"],
     entry_points={
         "console_scripts": [
-            "grep.py=unitils.cli:grep",
-            "find.py=unitils.cli:find",
-            "wc.py=unitils.cli:wc",
             "cat.py=unitils.cli:cat",
+            "cp.py=unitils.cli:cp",
+            "find.py=unitils.cli:find",
+            "grep.py=unitils.cli:grep",
+            "head.py=unitils.cli:head",
             "ls.py=unitils.cli:ls",
             "watch.py=unitils.cli:watch",
+            "wc.py=unitils.cli:wc",
             "which.py=unitils.cli:which",
         ]
     },
