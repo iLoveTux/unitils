@@ -85,10 +85,10 @@ def which(argv=None, out=sys.stdout, err=sys.stderr):
         "_all": args.all,
     }
     if not args.all:
-        out.write(unitils.which(**kwargs))
+        out.write(unitils.which(**kwargs)+"\n")
     else:
         for location in unitils.which(**kwargs):
-            out.write(location)
+            out.write(location+"\n")
 
 
 def watch(argv=None, out=sys.stdout, err=sys.stderr):
