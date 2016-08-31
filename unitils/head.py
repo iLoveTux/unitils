@@ -1,6 +1,7 @@
 import io
 import atexit
 import itertools
+
 def head(files, lines=10, verbose=False, quiet=False):
     if not isinstance(files, list):
         files = [files]

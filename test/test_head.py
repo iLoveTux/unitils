@@ -57,9 +57,9 @@ class TestHeadCli(unittest.TestCase):
                                      quiet=False)
 
 
-test_file_1 = StringIO("\n".join(("line {}".format(n) for n in range(1, 21))))
+test_file_1 = StringIO(u"\n".join(("line {}".format(n) for n in range(1, 21))))
 test_file_1.name = "test.file.1"
-test_file_2 = StringIO("\n".join(("line {}".format(n) for n in range(1, 21))))
+test_file_2 = StringIO(u"\n".join(("line {}".format(n) for n in range(1, 21))))
 test_file_2.name = "test.file.2"
 class TestHead(unittest.TestCase):
     """General tests for the head callable
