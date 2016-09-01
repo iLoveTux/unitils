@@ -1,7 +1,11 @@
 import sys
 import unitils
 import unittest
-from io import StringIO
+
+if sys.version_info[0] < 3:
+    from io import BytesIO as StringIO
+else:
+    from io import StringIO
 
 try:
     from unittest import mock
@@ -20,19 +24,19 @@ class TestPawnCli(unittest.TestCase):
             files=["input.txt"])
 
 
-test_data = StringIO(u"""
+test_data = StringIO("""
 This is a test
 This is only a test
 this is a test of your local Pawn interpreter
 """)
 
-test_data_2 = StringIO(u"""
+test_data_2 = StringIO("""
 This is a test
 This is only a test
 this is a test of your local Pawn interpreter
 """)
 
-test_script = StringIO(u"{print(LINE)}")
+test_script = StringIO("{print(LINE)}")
 
 class TestPawn(unittest.TestCase):
     """General tests for the functionality of pawn
@@ -50,7 +54,7 @@ class TestPawn(unittest.TestCase):
         """
         mock_out = StringIO()
         sys.stdout = mock_out
-        script = r"{print(LINE)}"
+        script = u"{print(LINE)}"
         expected = test_data.read()
         test_data.seek(0)
         unitils.pawn(script, test_data)
@@ -62,7 +66,7 @@ class TestPawn(unittest.TestCase):
     def test_patterns(self):
         mock_out = StringIO()
         sys.stdout = mock_out
-        script = r"""
+        script = u"""
             only{
                 print(LINE)
             }
@@ -83,7 +87,7 @@ class TestPawn(unittest.TestCase):
     def test_BEGIN(self):
         mock_out = StringIO()
         sys.stdout = mock_out
-        script = r"""
+        script = u"""
             BEGIN{
                 print("BEGIN")
             }
@@ -104,7 +108,7 @@ class TestPawn(unittest.TestCase):
     def test_END(self):
         mock_out = StringIO()
         sys.stdout = mock_out
-        script = r"""
+        script = u"""
             END{
                 print("END")
             }
@@ -126,7 +130,7 @@ class TestPawn(unittest.TestCase):
     def test_accepts_filename(self, mock_open):
         mock_out = StringIO()
         sys.stdout = mock_out
-        script = r"{print(LINE)}"
+        script = u"{print(LINE)}"
         expected = test_data.read()
         test_data.seek(0)
         unitils.pawn(script, "/tmp/sample")
@@ -139,7 +143,7 @@ class TestPawn(unittest.TestCase):
     def test_accepts_multiple_input_files(self, mock_open):
         mock_out = StringIO()
         sys.stdout = mock_out
-        script = r"{print(LINE)}"
+        script = u"{print(LINE)}"
         expected = test_data.read()
         expected = expected + expected
         test_data.seek(0)
@@ -153,7 +157,7 @@ class TestPawn(unittest.TestCase):
     def test_accepts_multiple_input_files_by_filename(self, mock_open):
         mock_out = StringIO()
         sys.stdout = mock_out
-        script = r"{print(LINE)}"
+        script = u"{print(LINE)}"
         expected = test_data.read()
         expected = expected + expected
         test_data.seek(0)

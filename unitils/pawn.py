@@ -36,13 +36,8 @@ def parse_actions(script):
     script = dedent(script)
     ret = {}
     for pattern, action in pattern_action.findall(script):
-        if pattern:
-            if pattern == "BEGIN" or pattern == "END":
-                pass
-            else:
-                pattern = re.compile(pattern)
-        else:
-            pattern = re.compile(".*")
+        if not pattern:
+            pattern = ".*"
         ret[pattern] = dedent(action)
     return ret
 
@@ -73,7 +68,7 @@ def pawn(script, files):
             environ["LINE"] = line.rstrip()
             environ["FIELDS"] = FS.split(line)
             for pattern in patterns:
-                if pattern.search(line):
+                if re.search(pattern, line):
                     exec(patterns[pattern], environ)
     if end:
         exec(end, environ)
