@@ -17,6 +17,11 @@ Introduction
     :scale: 100%
     :target: https://codecov.io/gh/iLoveTux/unitils
 
+.. image:: https://codeclimate.com/github/iLoveTux/unitils/badges/gpa.svg
+   :alt: Code Climate
+   :scale: 100%
+   :target: https://codeclimate.com/github/iLoveTux/unitils
+
 .. image:: https://readthedocs.org/projects/docs/badge/?version=latest
     :alt: Documentation Status
     :scale: 100%
