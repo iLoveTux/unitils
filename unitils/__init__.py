@@ -1,31 +1,29 @@
+from .cat import cat
+from .cp import cp
 from .find import find
 from .grep import grep
 from .head import head
-from .wc import wc
-from .cat import cat
 from .ls import ls
-from .pawn import pawn
-from .watch import watch
-from .which import which
-from .cp import cp
 from .mv import mv
-from .util import (
-    system_call
-)
+from .pawn import pawn
+from .util import system_call
+from .watch import watch
+from .wc import wc
+from .which import which
 
 __all__ = [
+    "cat",
+    "cli",
     "cp",
     "find",
     "grep",
     "head",
-    "wc",
-    "cat",
-    "cli",
     "ls",
     "mv",
     "pawn",
+    "system_call",
     "util",
     "watch",
+    "wc",
     "which",
-    "system_call",
 ]

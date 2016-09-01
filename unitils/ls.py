@@ -1,7 +1,7 @@
 import os
 
 def ls(path=".", _all=False, almost_all=False):
-    """Iterator yielding information about file (defaults to
+    """Iterator yielding information about path (defaults to
     current directory)
 
     Currently this will only list the contents of a directory.
@@ -12,10 +12,12 @@ def ls(path=".", _all=False, almost_all=False):
     or better yet submit a
     `pull request <https://github.com/ilovetux/unitils/pulls>`_
 
+    :param path: The directory to list
     :param _all: If True files starting with "." are not ignored
     :param almost_all: Like _all, but do not include "." and ".."
-    :type _all: bool
-    :type almost_all: bool
+    :type path: str
+    :type _all: boolean
+    :type almost_all: boolean
     """
     listing = sorted(os.listdir(path))
     if _all:

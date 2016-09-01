@@ -1,28 +1,3 @@
-"""
-pawn.py
--------
-
-A simple interpreted programming language based on Python and AWK.
-
-The rules are simple, and in a great act of blasphemy, they rely heavily
-on curly-braces "{}".
-
-So, a pawn program consists of patterns and actions. Patterns are regular
-expressions which are evaluated and actions which consist of Python source
-code.
-
-The main concept with pawn is that it is executed with two contexts the first
-is of a plain text input file and the second is a pawn script. Each line of
-the input is examined within the context of the pawn script. Based on the
-defined patterns a set of actions is built and executed in order.
-
-The Python source code which comprises an action is evaluated with the following
-global variables defined:
-
-* LINE: The current line being examined
-* FIELDS: A list containing the fields into which the LINE was split
-* FS: The field seperator, defaults to any whitespace
-"""
 import io
 import os
 import re
@@ -43,6 +18,32 @@ def parse_actions(script):
 
 
 def pawn(script, files):
+    """A simple interpreter for a language based on Python and AWK.
+
+    The rules are simple, and in a great act of blasphemy, they rely heavily
+    on curly-braces "{}".
+
+    So, a pawn program consists of patterns and actions. Patterns are regular
+    expressions which are evaluated and actions which consist of Python source
+    code.
+
+    The main concept with pawn is that it is executed with two contexts the first
+    is of a plain text input file and the second is a pawn script. Each line of
+    the input is examined within the context of the pawn script. Based on the
+    defined patterns a set of actions is built and executed in order.
+
+    The Python source code which comprises an action is evaluated with the following
+    global variables defined:
+
+    * LINE: The current line being examined
+    * FIELDS: A list containing the fields into which the LINE was split
+    * FS: The field seperator, defaults to any whitespace
+
+    :param script: The script to execute, can be passed as-is or a filename can be passed which will be read for the script
+    :param files: Can be a single file-like object or a str containing a filename or a list of either
+    :type script: str
+    :type files: str file list
+    """
     if not isinstance(files, list):
         files = [files]
     for index, file in enumerate(list(files)):

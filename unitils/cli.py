@@ -26,7 +26,7 @@ def pawn(argv=None, out=sys.stdout, err=sys.stderr):
     argv = sys.argv[1:] if argv is None else argv
     parser = argparse.ArgumentParser(
         prog="pawn.py",
-        description="A programming language made from combining"
+        description="A programming language made from combining "
                     "AWK, Python and awesomeness",
         epilog="Copyright 2016 iLoveTux - all rights reserved"
     )
