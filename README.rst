@@ -115,16 +115,18 @@ Unitils is tested and confirmed to work with
 
 Unitils should work on all platforms on which Python runs.
 
-Note: While it is supported, I cannot run the unittests in Python 3.5 on Windows because there is no wheel for lxml on PyPI for Python 3.5. I am able to test all the other versions of Python on Windows and I am able to test all versions on Linux, so unless there is a bug in Python which affects Python 3.5 on Windows we should be fine.
-
 ----------------------------------------------------------
 What is the current list of utilities provided by unitils?
 ----------------------------------------------------------
 
 * cat
+* cp
 * find
 * grep
+* head
 * ls
+* mv
+* pawn
 * watch
 * wc
 * which
@@ -133,19 +135,9 @@ What is the current list of utilities provided by unitils?
 What is on the list to be done?
 -------------------------------
 
-**In no particular order**
 
-* ll
-* top
-* zip / unzip
-* curl
-* ssh
-* make
-* awk
-* sed
-* file
-* strings
-* wget
+See `this issue <https://github.com/iLoveTux/unitils/issues/5>`_ for the state of
+our current prgress.
 
 ---------------
 How can I help?
