@@ -8,6 +8,7 @@ from .pawn import pawn
 from .watch import watch
 from .which import which
 from .cp import cp
+from .mv import mv
 from .util import (
     system_call
 )
@@ -21,6 +22,7 @@ __all__ = [
     "cat",
     "cli",
     "ls",
+    "mv",
     "pawn",
     "util",
     "watch",

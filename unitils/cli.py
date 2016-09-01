@@ -5,12 +5,29 @@ import argparse
 from time import time, ctime
 import colorama; colorama.init()
 
+def mv(argv=None, out=sys.stdout, err=sys.stderr):
+    argv = sys.argv[1:] if argv is None else argv
+    parser = argparse.ArgumentParser(
+        prog="mv.py",
+        description="A Simplified mv-like utility",
+        epilog="Copyright 2016 iLoveTux - all rights reserved"
+    )
+    parser.add_argument("src", help="The file or directory to move")
+    parser.add_argument("dst", help="The destination for src")
+    args = parser.parse_args(argv)
+    kwargs = {
+        "src": args.src,
+        "dst": args.dst
+    }
+    unitils.mv(**kwargs)
+
 
 def pawn(argv=None, out=sys.stdout, err=sys.stderr):
     argv = sys.argv[1:] if argv is None else argv
     parser = argparse.ArgumentParser(
-        prog="head.py",
-        description="A Simplified head-like utility",
+        prog="pawn.py",
+        description="A programming language made from combining"
+                    "AWK, Python and awesomeness",
         epilog="Copyright 2016 iLoveTux - all rights reserved"
     )
     parser.add_argument("script", nargs="?", default=None,
