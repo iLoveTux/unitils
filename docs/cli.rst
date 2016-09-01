@@ -5,14 +5,20 @@ CLI
 .. toctree::
     :maxdepth: 1
 
-    grep.py
     cat.py
+    cp.py
     find.py
+    grep.py
+    head.py
     ls.py
-    wc.py
+    mv.py
+    pawn.py
     watch.py
+    wc.py
+    which.py
 
-Here, I will outline the various cli utilities included with unitils, for now this is a placeholder. I will get to this soon.
+Please see `this issue <https://github.com/iLoveTux/unitils/issues/5>`_ for the
+current state of our progress.
 
 Overview
 ========
