@@ -29,8 +29,8 @@ import re
 import sys
 import atexit
 from textwrap import dedent
-FS = re.compile(r"\s")
-pattern_action = re.compile(r"(.*?)\{([^\}]+?)\}")
+FS = re.compile(r"\s", re.UNICODE)
+pattern_action = re.compile(r"(.*?)\{([^\}]+?)\}", re.UNICODE)
 
 def parse_actions(script):
     script = dedent(script)
