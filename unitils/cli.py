@@ -13,7 +13,7 @@ def pawn(argv=None, out=sys.stdout, err=sys.stderr):
         description="A Simplified head-like utility",
         epilog="Copyright 2016 iLoveTux - all rights reserved"
     )
-    parser.add_argument("script", nargs="?",
+    parser.add_argument("script", nargs="?", default=None,
                         help="The Pawn script to execute")
     parser.add_argument("files", nargs=argparse.REMAINDER,
                         help="The input file(s) which to examine")

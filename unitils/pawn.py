@@ -24,6 +24,7 @@ global variables defined:
 * FS: The field seperator, defaults to any whitespace
 """
 import io
+import os
 import re
 import sys
 import atexit
@@ -53,7 +54,11 @@ def pawn(script, files):
         if isinstance(file, str):
             files[index] = io.open(file, "r")
             atexit.register(files[index].close)
-    patterns = parse_actions(script)
+    if os.path.exists(script) and os.path.isfile(script):
+        with io.open(script, "r") as fp:
+            patterns = parse_actions(fp.read())
+    else:
+        patterns = parse_actions(script)
     environ = {
         "FS": FS.pattern
     }

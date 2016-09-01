@@ -19,14 +19,6 @@ class TestPawnCli(unittest.TestCase):
             script="{print(FIELDS[0])}",
             files=["input.txt"])
 
-    @mock.patch("unitils.pawn")
-    def test_accepts_dash_f(self, mock_pawn):
-        argv = ["-f", "pawn.script", "input.txt"]
-        unitils.cli.pawn(argv)
-        mock_pawn.assert_called_with(
-            script="{print(FIELDS[0])}",
-            files=["input.txt"])
-
 
 test_data = StringIO(u"""
 This is a test
@@ -39,6 +31,8 @@ This is a test
 This is only a test
 this is a test of your local Pawn interpreter
 """)
+
+test_script = StringIO(u"{print(LINE)}")
 
 class TestPawn(unittest.TestCase):
     """General tests for the functionality of pawn
@@ -164,6 +158,20 @@ class TestPawn(unittest.TestCase):
         expected = expected + expected
         test_data.seek(0)
         unitils.pawn(script, ["/tmp/sample", "/tmp/sample"])
+        mock_out.seek(0)
+        results = mock_out.read()
+        self.assertEqual(expected, results)
+        sys.stdout = sys.__stdout__
+
+    @mock.patch("os.path.isfile", return_value=True)
+    @mock.patch("os.path.exists", return_value=True)
+    @mock.patch("io.open", return_value=test_script)
+    def test_accepts_a_script_file(self, mock_open, mock_exists, mock_isfile):
+        mock_out = StringIO()
+        sys.stdout = mock_out
+        expected = test_data.read()
+        test_data.seek(0)
+        unitils.pawn("/tmp/script", test_data)
         mock_out.seek(0)
         results = mock_out.read()
         self.assertEqual(expected, results)
