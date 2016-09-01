@@ -28,13 +28,13 @@ class TestPawnCli(unittest.TestCase):
             files=["input.txt"])
 
 
-test_data = StringIO("""
+test_data = StringIO(u"""
 This is a test
 This is only a test
 this is a test of your local Pawn interpreter
 """)
 
-test_data_2 = StringIO("""
+test_data_2 = StringIO(u"""
 This is a test
 This is only a test
 this is a test of your local Pawn interpreter
