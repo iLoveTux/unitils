@@ -14,6 +14,11 @@ Introduction
     :alt: Test Coverage Status
     :target: https://codecov.io/gh/iLoveTux/unitils
 
+.. image:: https://codeclimate.com/github/iLoveTux/unitils/badges/gpa.svg
+   :alt: Code Climate
+   :scale: 100%
+   :target: https://codeclimate.com/github/iLoveTux/unitils
+
 .. image:: https://readthedocs.org/projects/docs/badge/?version=latest
     :alt: Documentation Status
     :target: http://unitils.readthedocs.io/en/latest/index.html
@@ -116,10 +121,13 @@ Note: While it is supported, I cannot run the unittests in Python 3.5 on Windows
 What is the current list of utilities provided by unitils?
 ----------------------------------------------------------
 
+* cat
 * find
 * grep
-* cat
+* ls
+* watch
 * wc
+* which
 
 -------------------------------
 What is on the list to be done?
@@ -127,19 +135,17 @@ What is on the list to be done?
 
 **In no particular order**
 
-* ls
 * ll
 * top
-* wget
 * zip / unzip
 * curl
 * ssh
 * make
-* watch
 * awk
 * sed
 * file
 * strings
+* wget
 
 ---------------
 How can I help?

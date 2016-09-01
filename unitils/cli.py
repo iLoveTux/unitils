@@ -2,12 +2,171 @@ from __future__ import print_function
 import sys
 import unitils
 import argparse
+from time import time, ctime
 import colorama; colorama.init()
+
+def mv(argv=None, out=sys.stdout, err=sys.stderr):
+    argv = sys.argv[1:] if argv is None else argv
+    parser = argparse.ArgumentParser(
+        prog="mv.py",
+        description="A Simplified mv-like utility",
+        epilog="Copyright 2016 iLoveTux - all rights reserved"
+    )
+    parser.add_argument("src", help="The file or directory to move")
+    parser.add_argument("dst", help="The destination for src")
+    args = parser.parse_args(argv)
+    kwargs = {
+        "src": args.src,
+        "dst": args.dst
+    }
+    unitils.mv(**kwargs)
+
+
+def pawn(argv=None, out=sys.stdout, err=sys.stderr):
+    argv = sys.argv[1:] if argv is None else argv
+    parser = argparse.ArgumentParser(
+        prog="pawn.py",
+        description="A programming language made from combining"
+                    "AWK, Python and awesomeness",
+        epilog="Copyright 2016 iLoveTux - all rights reserved"
+    )
+    parser.add_argument("script", nargs="?", default=None,
+                        help="The Pawn script to execute")
+    parser.add_argument("files", nargs=argparse.REMAINDER,
+                        help="The input file(s) which to examine")
+    args = parser.parse_args(argv)
+    kwargs = {
+        "script": args.script,
+        "files": args.files,
+    }
+    unitils.pawn(**kwargs)
+
+def head(argv=None, out=sys.stdout, err=sys.stderr):
+    argv = sys.argv[1:] if argv is None else argv
+    parser = argparse.ArgumentParser(
+        prog="head.py",
+        description="A Simplified head-like utility",
+        epilog="Copyright 2016 iLoveTux - all rights reserved"
+    )
+    parser.add_argument("-n", "--lines", type=int, default=10,
+                        help="The number of lines to print")
+    parser.add_argument("-q", "--quiet", action="store_true",
+                        help="Do not print header with filename")
+    parser.add_argument("-v", "--verbose", action="store_true",
+                        help="Always print header with filename")
+    parser.add_argument("files", nargs=argparse.REMAINDER,
+                        help="The file(s) which to examine")
+    args = parser.parse_args(argv)
+    kwargs = {
+        "files": args.files,
+        "lines": args.lines,
+        "quiet": args.quiet,
+        "verbose": args.verbose
+    }
+    results = unitils.head(**kwargs)
+    if isinstance(results, dict):
+        for filename, lines in results.items():
+            out.write("==> {} <==\n".format(filename))
+            for line in lines:
+                out.write(line)
+    else:
+        for line in results:
+            out.write(line)
+
+def cp(argv=None, out=sys.stdout, err=sys.stderr):
+    argv = sys.argv[1:] if argv is None else argv
+    parser = argparse.ArgumentParser(
+        prog="cp.py",
+        description="A Simplified cp-like utility",
+        epilog="Copyright 2016 iLoveTux - all rights reserved"
+    )
+    parser.add_argument("-R", "--recursive",
+                        action="store_true",
+                        help="If specified, src will be copied "
+                             "recursively to dst")
+    parser.add_argument("-n", "--no-clobber",
+                        action="store_true",
+                        help="If specified, src will not be copied "
+                             "if it already exists")
+    parser.add_argument("src", help="file to copy")
+    parser.add_argument("dst", help="destination of copy")
+    args = parser.parse_args(argv)
+    kwargs = {
+        "src": args.src,
+        "dst": args.dst,
+        "recursive": args.recursive,
+        "no_clobber": args.no_clobber
+    }
+    unitils.cp(**kwargs)
+
+
+def which(argv=None, out=sys.stdout, err=sys.stderr):
+    argv = sys.argv[1:] if argv is None else argv
+    parser = argparse.ArgumentParser(
+        prog="which.py",
+        description="A Simplified which-like utility",
+        epilog="Copyright 2016 iLoveTux - all rights reserved"
+    )
+    parser.add_argument(
+        "cmd",
+        help="The executable for which to search PATH"
+    )
+    parser.add_argument(
+        "-a", "--all", action="store_true",
+        help="If specified, print all locations of cmd on PATH"
+    )
+    args = parser.parse_args(argv)
+    kwargs = {
+        "cmd": args.cmd,
+        "_all": args.all,
+    }
+    if not args.all:
+        out.write(unitils.which(**kwargs)+"\n")
+    else:
+        for location in unitils.which(**kwargs):
+            out.write(location+"\n")
+
+
+def watch(argv=None, out=sys.stdout, err=sys.stderr):
+    argv = sys.argv[1:] if argv is None else argv
+    parser = argparse.ArgumentParser(
+        prog="watch.py",
+        description="A Simplified watch-like utility",
+        epilog="Copyright 2016 iLoveTux - all rights reserved"
+    )
+    parser.add_argument(
+        "command",
+        help="command to monitor"
+    )
+    parser.add_argument(
+        "--interval", "-n", type=int, default=2,
+        help="seconds to wait between updates"
+    )
+    args = parser.parse_args(argv)
+    kwargs = {
+        "command": args.command,
+        "interval": args.interval
+    }
+    terminal_width = unitils.get_terminal_size()[0]
+    try:
+        for out, err, rc in unitils.watch(**kwargs):
+            msg = "every {} seconds: {}".format(args.interval, args.command)
+            timestamp = ctime(time())
+            header = "{}{}{}".format(
+                msg,
+                " " * (terminal_width-(len(msg)+len(timestamp))),
+                timestamp
+            )
+            clear()
+            print(header, end="\n\n")
+            print(out.decode("utf-8"))
+    except KeyboardInterrupt:
+        pass
 
 def ls(argv=None, out=sys.stdout, err=sys.stderr):
     argv = sys.argv[1:] if argv is None else argv
     parser = argparse.ArgumentParser(
-        prog="wc.py",
+        prog="ls.py",
         description="A Simplified ls-like utility",
         epilog="Copyright 2016 iLoveTux - all rights reserved"
     )
@@ -35,8 +194,8 @@ def ls(argv=None, out=sys.stdout, err=sys.stderr):
 def cat(argv=None, out=sys.stdout, err=sys.stderr):
     argv = sys.argv[1:] if argv is None else argv
     parser = argparse.ArgumentParser(
-        prog="wc.py",
-        description="A Simplified wc-like utility",
+        prog="cat.py",
+        description="A Simplified cat-like utility",
         epilog="Copyright 2016 iLoveTux - all rights reserved"
     )
     parser.add_argument(

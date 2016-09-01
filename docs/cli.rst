@@ -2,6 +2,15 @@
 CLI
 ***
 
+.. toctree::
+    :maxdepth: 1
+
+    grep.py
+    cat.py
+    find.py
+    ls.py
+    wc.py
+    watch.py
 
 Here, I will outline the various cli utilities included with unitils, for now this is a placeholder. I will get to this soon.
 

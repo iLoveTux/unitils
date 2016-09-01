@@ -6,6 +6,18 @@ import os
 
 def find(path=".", name=None, iname=None, ftype="*"):
     """Search for files in a directory heirarchy.
+
+    This is dramatically different from the GNU version of
+    find. There is no Domain Specific language.
+
+    :param path: The directory to start in
+    :param name: The name spec (glob pattern) to search for
+    :param iname: The case-insensitive name spec (glob pattern) to search for
+    :param ftype: The type of file to search for must be one of b, c, d, p, f, k, s or *
+    :type ftype: str
+    :type iname: str
+    :type name: str
+    :type path: str
     """
     if ftype not in "bcdpfls*" or len(ftype) != 1:
         raise NotImplementedError(
