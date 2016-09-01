@@ -124,9 +124,13 @@ What is the current list of utilities provided by unitils?
 ----------------------------------------------------------
 
 * cat
+* cp
 * find
 * grep
+* head
 * ls
+* mv
+* pawn
 * watch
 * wc
 * which
@@ -135,19 +139,9 @@ What is the current list of utilities provided by unitils?
 What is on the list to be done?
 -------------------------------
 
-**In no particular order**
 
-* ll
-* top
-* zip / unzip
-* curl
-* ssh
-* make
-* awk
-* sed
-* file
-* strings
-* wget
+See `this issue <https://github.com/iLoveTux/unitils/issues/5>`_ for the state of
+our current prgress.
 
 ---------------
 How can I help?

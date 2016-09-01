@@ -22,18 +22,5 @@ This is when our idea was made to not only make a library which provides functio
 The commands we are targeting
 -----------------------------
 
-This list is subject to change
-
-- grep
-- tail
-- find
-- wget
-- curl
-- tee
-- top
-- wc
-
-grep.py
--------
-
-To differentiate ourselves from the real "grep", we have named our command line utility "grep.py". The Python function takes a list of filenames (or open file objects) and searches these files line-by-line for any lines which match a pattern. These lines are then yielded. Options similar to the original "grep" command are accepted.
+Please see `this issue <https://github.com/iLoveTux/unitils/issues/5>`_ for the
+current state of our progress.
