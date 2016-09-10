@@ -1,2 +1,1 @@
 colorama>=0.3.7
-nose-cprof>=0.1.post1

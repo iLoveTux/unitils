@@ -1,13 +1,13 @@
 import sys
 from setuptools import setup
 
-tests_require = ["nose"]
+tests_require = ["nose>=1.0"]
 if sys.version_info < (3,0):
-    tests_require = ["nose", "mock"]
+    tests_require = ["nose>=1.0", "mock"]
 
 setup(
     name="unitils",
-    version="0.1.0",
+    version="0.1.1",
     author="iLoveTux",
     author_email="me@ilovetux.com",
     description="Cross platform utilities I have found to be incredibly useful",
@@ -25,7 +25,6 @@ setup(
             "head.py=unitils.cli:head",
             "ls.py=unitils.cli:ls",
             "mv.py=unitils.cli:mv",
-            "pawn.py=unitils.cli:pawn",
             "watch.py=unitils.cli:watch",
             "wc.py=unitils.cli:wc",
             "which.py=unitils.cli:which",
@@ -36,6 +35,6 @@ setup(
     classifiers=[
         "Development Status :: 4 - Beta",
         "Topic :: Utilities",
-        "License :: OSI Approved :: GPLv3",
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     ],
 )

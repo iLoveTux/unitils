@@ -4,7 +4,7 @@ install:
 	pip install -e .[test]
 
 lint:
-	flake8 --ignore=E501 DataPower/ test/
+	flake8 --ignore=E501 unitils/ test/
 
 clean:
 	find . -name '*.pyc' -delete
@@ -30,14 +30,9 @@ release:
 	twine upload -s dist/*
 
 publish:
-	rm -fr /tmp/DataPower-docs
 	$(MAKE) docs
-	cp -fR docs/_build/html/ /tmp/DataPower-docs
 	git checkout gh-pages
-	cp -fR /tmp/DataPower-docs/* .
 	git add .
 	git commit -m "Update docs"
 	git push
 	git checkout master
-	firefox https://mcindi.github.io/DataPower.py
-
