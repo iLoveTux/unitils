@@ -126,7 +126,6 @@ What is the current list of utilities provided by unitils?
 * head
 * ls
 * mv
-* pawn
 * watch
 * wc
 * which

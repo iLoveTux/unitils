@@ -12,7 +12,6 @@ CLI
     head.py
     ls.py
     mv.py
-    pawn.py
     watch.py
     wc.py
     which.py
