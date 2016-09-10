@@ -1,9 +1,9 @@
 import sys
 from setuptools import setup
 
-tests_require = ["nose"]
+tests_require = ["nose>=1.0"]
 if sys.version_info < (3,0):
-    tests_require = ["nose", "mock"]
+    tests_require = ["nose>=1.0", "mock"]
 
 setup(
     name="unitils",
