@@ -23,7 +23,7 @@ install:
 build: false  # Not a C# project, build stuff at the test step instead.
 
 test_script:
-  - "%PYTHON%/python setup.py nosetests"
+  - "%PYTHON%/python setup.py test"
 
 artifacts:
   - path: dist\*
