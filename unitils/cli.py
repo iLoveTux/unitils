@@ -180,7 +180,7 @@ def cat(argv=None, out=sys.stdout, err=sys.stderr):
         epilog="Copyright 2016 iLoveTux - all rights reserved"
     )
     parser.add_argument(
-        "files", nargs="*", default=[sys.stdin], type=argparse.FileType("rb"),
+        "files", nargs="*", default=[sys.stdin], type=argparse.FileType("r"),
         help="A list of files to inspect"
     )
     parser.add_argument(
