@@ -1,4 +1,7 @@
-﻿import re
+﻿from __future__ import unicode_literals
+import io
+import os
+import re
 import sys
 import atexit
 import colorama
@@ -25,6 +28,10 @@ def build_regex(pattern, ignore_case):
     except ValueError:
         # Might already be a compiled regular expression
         return re.compile(pattern.pattern, flags=flags)
+
+# Python 2 and 3 compatibility
+def is_string(s):
+    return isinstance(s, ("".__class__, u"".__class__))
 
 def grep(expr,
          files,
@@ -61,6 +68,10 @@ def grep(expr,
     """
     expr = build_regex(expr, ignore_case)
     files = files if isinstance(files, list) else [files]
+    for index, fp in enumerate(list(files)):
+        if is_string(fp) and os.path.exists(fp) and os.path.isfile(fp):
+            files[index] = io.open(fp)
+            atexit.register(files[index].close)
     for fp in files:
         for line_number, line in enumerate(fp, start=1):
             if bool(expr.search(line)) == invert_match:
