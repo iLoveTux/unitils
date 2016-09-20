@@ -329,4 +329,4 @@ def grep(argv=None, out=sys.stdout, err=sys.stderr):
         "color": args.color == "auto"
     }
     for line in unitils.grep(**kwargs):
-        out.write(line.rstrip())
+        out.write(line)

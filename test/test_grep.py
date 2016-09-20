@@ -35,9 +35,9 @@ def red(text):
     )
 
 return_value = (
-    "this",
-    "that",
-    "the other"
+    "this\n",
+    "that\n",
+    "the other\n"
 )
 class TestGrepCLI(unittest.TestCase):
 
@@ -60,6 +60,14 @@ class TestGrepCLI(unittest.TestCase):
             invert_match=False,
             ignore_case=False
         )
+
+    @mock.patch("unitils.grep", return_value=return_value)
+    def test_does_not_strip_trailing_whitespace(self, mock_grep):
+        args = ["that"]
+        out = StringIO()
+        unitils.cli.grep(args, out=out)
+        out.seek(0)
+        self.assertEqual(out.read(), "this\nthat\nthe other\n")
 
 test_data = (
     u"line 1",
