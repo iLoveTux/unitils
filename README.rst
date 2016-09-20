@@ -27,9 +27,9 @@ Introduction
 What is it and why do I care?
 -----------------------------
 
-Unitils has been incredibly useful for my co-workers and myself. They are simplified, altered forms of common and useful utilities you are likely to find on most Unix-like operating systems. They are written as command line utilities, but also present a single Python function which can be used from within Python without "shelling" the command out.
+Unitils has been incredibly useful for my co-workers and myself. They are simplified, altered forms of common and useful utilities you are likely to find on most Unix-like operating systems. They are written as command line utilities, but also present a single Python generator which can be used from within Python without "shelling" the command out.
 
-Because of the simplified nature of these utilities along with the alterations made whether we had a choice or not. We wished to differentiate ourselves from similar commands which were there first. Each of our utilities appends ".py" to the end of the command. For instance, our version of `grep` can be invoked with the `grep.py` command (`grep.py.exe` on Windows).
+Because of the simplified nature of these utilities along with the compromises we have made. We wished to differentiate ourselves from similar commands which were our inspiration. Each of our utilities appends ".py" to the end of the command. For instance, our version of `grep` can be invoked with the `grep.py` command.
 
 For instance, `grep.py` is designed to be used just like this::
 
@@ -48,15 +48,13 @@ Why should I use it?
 --------------------
 
 Unitils is a collection of useful utilities which have been re-written to be simple
-and to provide a CLI as well as a Python API. A few considerations which went into
-the design should be highlighted to understand why this was written and why it would
-be useful.
+and to provide a CLI as well as a Python API.
 
 Unitils was written to be:
 
-    - `Fast <https://ilovetux.github.io/unitils/stats.dat>`_, everything is an iterator (where possible) and strives to be as efficient in both memory and cpu time.
+    - Fast, everything is an generator (where possible) and strives to be as efficient in both memory and cpu time.
 
-    - `Tested <https://ilovetux.github.io/unitils/cover.html>`_, Unittests are at and will remain at 100% test coverage.
+    - Tested, Unittests are important and we strive for high test coverage.
 
     - Cross Platform, Written in Python these utilities can run on Windows, Linux and Mac OSx.
 
@@ -68,7 +66,7 @@ Unitils was written to be:
 How does it work?
 -----------------
 
-Each command we target, we create a Python iterator which yields the output and send it to stdout. So we in effect have native, memory efficient access to many common utilities directly from within Python.
+Each command we target, we create a Python generator which yields the output and send it to stdout. So we in effect have native, memory efficient access to many common utilities directly from within Python. We then wrap a command line interface around this generator tp provide our users with a convenient cross-platform utility.
 
 ----------------
 How do I get it?
