@@ -5,6 +5,7 @@ import shutil
 import unitils
 import unittest
 from unitils import cli
+from io import StringIO
 try:
     from unittest import mock
 except ImportError:
@@ -61,6 +62,20 @@ class TestFindCLI(unittest.TestCase):
             iname="*.log",
             ftype="*"
         )
+
+    @mock.patch("unitils.find", return_value=return_value)
+    def test_outputs_newlines_between_results(self, mock_find):
+        args = ["-name", "*.log"]
+        out = StringIO()
+        unitils.cli.find(args, out=out)
+        mock_find.assert_called_with(
+            path=".",
+            name="*.log",
+            iname=None,
+            ftype="*"
+        )
+        out.seek(0)
+        self.assertEqual(len(out.readlines()), 3)
 
 class TestFind(unittest.TestCase):
     """Generic tests for unitils.find

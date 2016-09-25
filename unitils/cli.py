@@ -1,4 +1,6 @@
 from __future__ import print_function, unicode_literals
+from __future__ import print_function
+import os
 import sys
 import unitils
 import argparse
@@ -274,6 +276,7 @@ def find(argv=None, out=sys.stdout, err=sys.stderr):
         "ftype": args.type
     }
     for result in unitils.find(**kwargs):
+        result = u"{}{}".format(result, os.linesep)
         out.write(result)
 
 def grep(argv=None, out=sys.stdout, err=sys.stderr):
