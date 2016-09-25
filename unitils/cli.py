@@ -240,8 +240,11 @@ def wc(argv=None, out=sys.stdout, err=sys.stderr):
         "words": args.words,
         "max_line_length": args.max_line_length
     }
+    fmt_str = ""
     for result in unitils.wc(**kwargs):
-        out.write("  ".join((str(x) for x in result))+"\n")
+        if not fmt_str:
+            fmt_str = " {} " * (len(result) - 1) + "{}{}"
+        out.write(fmt_str.format(*result+(os.linesep, )))
 
 
 def find(argv=None, out=sys.stdout, err=sys.stderr):

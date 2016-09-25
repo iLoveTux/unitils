@@ -2,7 +2,7 @@ import os
 import re
 import atexit
 
-word = re.compile(r"(.*?)\s+")
+word = re.compile(r"(\S+)")
 
 def _examine_fp(fp):
     """Examine fp and returns the interesting metrics.
