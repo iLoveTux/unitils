@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import os
 import re
 import sys
@@ -35,9 +36,9 @@ def red(text):
     )
 
 return_value = (
-    "this",
-    "that",
-    "the other"
+    "this\n",
+    "that\n",
+    "the other\n"
 )
 class TestGrepCLI(unittest.TestCase):
 
@@ -60,6 +61,28 @@ class TestGrepCLI(unittest.TestCase):
             invert_match=False,
             ignore_case=False
         )
+
+    @mock.patch("unitils.grep", return_value=return_value)
+    def test_parses_file_arguments_properly(self, mock_grep):
+        args = [r"\w+", "this.txt", "that.txt"]
+        unitils.cli.grep(args)
+        mock_grep.assert_called_with(
+            expr=r"\w+",
+            files=["this.txt", "that.txt"],
+            line_numbers=False,
+            filenames=False,
+            color=True,
+            invert_match=False,
+            ignore_case=False
+        )
+
+    @mock.patch("unitils.grep", return_value=return_value)
+    def test_does_not_strip_trailing_whitespace(self, mock_grep):
+        args = ["that"]
+        out = StringIO()
+        unitils.cli.grep(args, out=out)
+        out.seek(0)
+        self.assertEqual(out.read(), "this\nthat\nthe other\n")
 
 test_data = (
     u"line 1",
@@ -118,18 +141,21 @@ class TestGrep(unittest.TestCase):
         ))
         self.assertEqual(results, expected)
 
-    def test_with_list_of_filenames(self):
+    @mock.patch("os.path.exists", return_value=True)
+    @mock.patch("os.path.isfile", return_value=True)
+    @mock.patch("io.open", side_effect=[StringIO("\n".join(test_data)), StringIO("\n".join(test_data))])
+    def test_with_list_of_filenames(self, mock_open, mock_isfile, mock_exists):
         """given regex, grep should find all occurances within file
         """
         expected = [
-            "1 line",
-            "1 Line",
-            "1 line",
-            "1 Line",
+            "1 line\n",
+            "1 Line\n",
+            "1 line\n",
+            "1 Line\n",
         ]
         results = list(unitils.grep(
-            r"^\d+.*",
-            [test_data, test_data]
+            expr=r"^\d+.*",
+            files=["this.txt", "that.txt"]
         ))
         self.assertEqual(results, expected)
 

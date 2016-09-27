@@ -48,3 +48,4 @@ def find(path=".", name=None, iname=None, ftype="*"):
             _stat = os.stat(filename)
             if regex.match(n) and type_test(_stat.st_mode):
                 yield filename
+

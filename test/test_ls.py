@@ -1,5 +1,6 @@
 import unittest
 import unitils
+from io import StringIO
 
 try:
     from unittest import mock
@@ -11,6 +12,24 @@ return_value = (
     'the other',  'the other',  'the other',
     'this',       'this',       'this'
 )
+column_test_return_value = (
+    "appveyor.yml",
+    "cover",
+    "docs",
+    "Makefile",
+    "requirements.txt",
+    "setup.py",
+    "test",
+    "unitils",
+    "codecov.yml",
+    "dist",
+    "LICENSE",
+    "README.rst",
+    "setup.cfg",
+    "stats.dat",
+    "test-data",
+    "unitils.egg-info",
+)
 class TestLsCLI(unittest.TestCase):
 
     @mock.patch("unitils.ls", return_value=return_value)
@@ -18,6 +37,19 @@ class TestLsCLI(unittest.TestCase):
         args = []
         unitils.cli.ls(args)
         mock_ls.assert_called_with(path=".", _all=False, almost_all=False)
+
+    @mock.patch("unitils.ls", return_value=column_test_return_value)
+    @mock.patch("unitils.cli.get_terminal_size", return_value=(104, 25))
+    def test_columns(self, mock_term_size, mock_ls):
+        args = []
+        out = StringIO()
+        unitils.cli.ls(args, out=out)
+        out.seek(0)
+        results = out.read()
+        expected = """appveyor.yml  cover  docs     Makefile    requirements.txt  setup.py   test       unitils           
+codecov.yml   dist   LICENSE  README.rst  setup.cfg         stats.dat  test-data  unitils.egg-info  
+"""
+        self.assertEqual(expected, results)        
 
 
 directory_listing = ["this", "that", "the other"] * 3

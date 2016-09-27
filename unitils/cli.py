@@ -1,7 +1,11 @@
+from __future__ import print_function, unicode_literals
 from __future__ import print_function
+import os
 import sys
 import unitils
 import argparse
+from itertools import cycle
+from .util import get_terminal_size
 from time import time, ctime
 import colorama; colorama.init()
 
@@ -169,8 +173,29 @@ def ls(argv=None, out=sys.stdout, err=sys.stderr):
         "_all": args.all,
         "almost_all": args.almost_all
     }
-    for item in unitils.ls(**kwargs):
-        out.write(item + "\n")
+    output = sorted(list(unitils.ls(**kwargs)), key=lambda s: s.lower())
+    width = get_terminal_size()[0]
+    num_rows = 1
+    while True:
+        rows = [list() for row in range(num_rows)]
+        for index, row in enumerate(cycle(rows)):
+            try:
+                row.append(output[index])
+            except IndexError:
+                break
+        widths = []
+        for index in range(len(rows[0])):
+            widths.append(len(max([row[index] for row in rows], key=len)) + 2)
+        if sum(widths) > width:
+            num_rows += 1
+        else:
+            for row in rows:
+                for index, item in enumerate(row):
+                    fmt_str = "{:<%s}" % str(widths[index])
+                    out.write(fmt_str.format(item))
+                out.write("\n")
+            break
+            
 
 def cat(argv=None, out=sys.stdout, err=sys.stderr):
     argv = sys.argv[1:] if argv is None else argv
@@ -180,7 +205,7 @@ def cat(argv=None, out=sys.stdout, err=sys.stderr):
         epilog="Copyright 2016 iLoveTux - all rights reserved"
     )
     parser.add_argument(
-        "files", nargs="*", default=[sys.stdin], type=argparse.FileType("rb"),
+        "files", nargs="*", default=[sys.stdin], type=argparse.FileType("r"),
         help="A list of files to inspect"
     )
     parser.add_argument(
@@ -238,8 +263,17 @@ def wc(argv=None, out=sys.stdout, err=sys.stderr):
         "words": args.words,
         "max_line_length": args.max_line_length
     }
-    for result in unitils.wc(**kwargs):
-        out.write("  ".join((str(x) for x in result))+"\n")
+    fmt_str = ""
+    rows = list(unitils.wc(**kwargs))
+    widths = []
+    for index in range(len(rows[0])):
+        widths.append(len(max([str(row[index]) for row in rows], key=len)) + 2)
+    for row in rows:
+        for index, item in enumerate(row[:-1]):
+            fmt_str = "{:>%s}" % widths[index]
+            out.write(fmt_str.format(item))
+        fmt_str = " {:<%s}" % widths[-1]
+        out.write(fmt_str.format(row[-1]) + "\n")
 
 
 def find(argv=None, out=sys.stdout, err=sys.stderr):
@@ -274,6 +308,7 @@ def find(argv=None, out=sys.stdout, err=sys.stderr):
         "ftype": args.type
     }
     for result in unitils.find(**kwargs):
+        result = u"{}{}".format(result, os.linesep)
         out.write(result)
 
 def grep(argv=None, out=sys.stdout, err=sys.stderr):
@@ -329,4 +364,4 @@ def grep(argv=None, out=sys.stdout, err=sys.stderr):
         "color": args.color == "auto"
     }
     for line in unitils.grep(**kwargs):
-        out.write(line.rstrip())
+        out.write(line)
