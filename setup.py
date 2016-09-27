@@ -7,7 +7,7 @@ if sys.version_info < (3,0):
 
 setup(
     name="unitils",
-    version="0.1.1",
+    version="0.1.2",
     author="iLoveTux",
     author_email="me@ilovetux.com",
     description="Cross platform utilities I have found to be incredibly useful",
