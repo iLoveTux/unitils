@@ -4,6 +4,8 @@ import os
 import sys
 import unitils
 import argparse
+from itertools import cycle
+from .util import get_terminal_size
 from time import time, ctime
 import colorama; colorama.init()
 
@@ -171,8 +173,29 @@ def ls(argv=None, out=sys.stdout, err=sys.stderr):
         "_all": args.all,
         "almost_all": args.almost_all
     }
-    for item in unitils.ls(**kwargs):
-        out.write(item + "\n")
+    output = sorted(list(unitils.ls(**kwargs)), key=lambda s: s.lower())
+    width = get_terminal_size()[0]
+    num_rows = 1
+    while True:
+        rows = [list() for row in range(num_rows)]
+        for index, row in enumerate(cycle(rows)):
+            try:
+                row.append(output[index])
+            except IndexError:
+                break
+        widths = []
+        for index in range(len(rows[0])):
+            widths.append(len(max([row[index] for row in rows], key=len)) + 2)
+        if sum(widths) > width:
+            num_rows += 1
+        else:
+            for row in rows:
+                for index, item in enumerate(row):
+                    fmt_str = "{:<%s}" % str(widths[index])
+                    out.write(fmt_str.format(item))
+                out.write("\n")
+            break
+            
 
 def cat(argv=None, out=sys.stdout, err=sys.stderr):
     argv = sys.argv[1:] if argv is None else argv
