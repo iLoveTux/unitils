@@ -264,10 +264,16 @@ def wc(argv=None, out=sys.stdout, err=sys.stderr):
         "max_line_length": args.max_line_length
     }
     fmt_str = ""
-    for result in unitils.wc(**kwargs):
-        if not fmt_str:
-            fmt_str = " {} " * (len(result) - 1) + "{}{}"
-        out.write(fmt_str.format(*result+(os.linesep, )))
+    rows = list(unitils.wc(**kwargs))
+    widths = []
+    for index in range(len(rows[0])):
+        widths.append(len(max([str(row[index]) for row in rows], key=len)) + 2)
+    for row in rows:
+        for index, item in enumerate(row[:-1]):
+            fmt_str = "{:>%s}" % widths[index]
+            out.write(fmt_str.format(item))
+        fmt_str = " {:<%s}" % widths[-1]
+        out.write(fmt_str.format(row[-1]) + "\n")
 
 
 def find(argv=None, out=sys.stdout, err=sys.stderr):
