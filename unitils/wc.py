@@ -1,5 +1,6 @@
 import os
 import re
+import io
 import atexit
 
 word = re.compile(r"(\S+)")
@@ -24,12 +25,17 @@ def _examine_fp(fp):
         current_line_length = len(line.strip())
         if max_line_length < current_line_length:
             max_line_length = current_line_length
-    fp.seek(0, os.SEEK_END)
+    try:
+        fp.seek(0, os.SEEK_END)
+        _bytes = fp.tell()
+    except io.UnsupportedOperation:
+        # If stdin, assume a byte per char, probably a bad idea
+        _bytes = current_chars
     filename = fp.name if hasattr(fp, "name") else "<stdin>"
     return (
         current_lines,
         current_words,
-        fp.tell(),
+        _bytes,
         current_chars,
         max_line_length,
         filename
